@@ -86,6 +86,7 @@ As informações dispostas no sistema de pedidos precisarão ser gerenciadas pel
      + Listar pedidos
 
 c) Aplicação deverá ser escalável para atender grandes volumes nos horários de pico
+
 d) Banco de dados a escolha da equipe
   * Trabalhar para organizar a fila de pedidos via banco de dados
 
