@@ -74,14 +74,15 @@ As informações dispostas no sistema de pedidos precisarão ser gerenciadas pel
   + Preparação e entrega do pedido
 
 + Uma aplicação para todo sistema de backend (monolito) que deverá ser desenvolvido seguindo os padrões apresentados nas aulas:
-a) Arquitetura hexagonal
-b) APIs
-+ Cadastro de cliente
-+ Identificação do Cliente via CPF
-+ Criar, editar e remover produto
-+ Buscar produtos por categoria
-+ Fake checkout, apenas enviar os produtos para a fila 
-+ Listar pedidos
+
+  a) Arquitetura hexagonal
+  b) APIs
+     + Cadastro de cliente
+     + Identificação do Cliente via CPF
+     + Criar, editar e remover produto
+     + Buscar produtos por categoria
+     + Fake checkout, apenas enviar os produtos para a fila 
+     + Listar pedidos
 
 c) Aplicação deverá ser escalável para atender grandes volumes nos horários de pico
 d) Banco de dados a escolha da equipe
