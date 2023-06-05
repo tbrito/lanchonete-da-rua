@@ -1,4 +1,4 @@
-[__TOC__]
+
 
 # Lanchonete da Rua
 
