@@ -19,7 +19,17 @@ pip install flask_testing
 ```
 
 # O Problema
-Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Porém, com a expansão e sem um sistema de controle de pedidos, o atendimento aos clientes pode ser caótico e confuso. Por exemplo, imagine que um cliente faça um pedido complexo, como um hambúrgues personalizado com ingredientes especificos,  acompanhado de batatas fritas e uma bebida. O atendente pode anotar o pedido em um papel e entregá-lo à cosiznha, mas não há garantia de que o pedido será preparado corretamente. Sem um sistema de controle de pedidos, pode haver confusão entre os atendentes e a cozinha, resultando em atrasos na preparação e entrega dos pedidos. Os pedidos podem ser perdidos, mal interpretados ou esquecidos, levando à insatisfação dos clientes e a perda de negócios. Em esumo, um sistema de controle de pedidos é essencial para garantir que a lanchonete possa atender os clientes de maneira eficiente, gerenciando seus  pedidos e estoques de forma adequada. Sem ele, expandir a lanchonete pode acabar não dando certo, resultando em clientes insatisfeitos e impactando os negocios de forma negativa. Para solucionar o problem, a lanchonete irá investir em um sistema de autoatendimento de fast food, que é composto por uma série de dispositivos e interfaces que permitem aos clienetes selecionar e fazer pedidos sem precisar interagir com um aendente, com as seguintes funcionalidades:
+Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Porém, com a expansão e sem um sistema de controle de pedidos, o atendimento aos clientes pode ser caótico e confuso. 
+
+Por exemplo, imagine que um cliente faça um pedido complexo, como um hambúrgues personalizado com ingredientes especificos,  acompanhado de batatas fritas e uma bebida. 
+O atendente pode anotar o pedido em um papel e entregá-lo à cosiznha, mas não há garantia de que o pedido será preparado corretamente. 
+
+Sem um sistema de controle de pedidos, pode haver confusão entre os atendentes e a cozinha, resultando em atrasos na preparação e entrega dos pedidos. 
+Os pedidos podem ser perdidos, mal interpretados ou esquecidos, levando à insatisfação dos clientes e a perda de negócios. 
+Em resumo, um **sistema de controle de pedidos** é essencial para garantir que a lanchonete possa atender os clientes de maneira eficiente, gerenciando seus  pedidos e estoques de forma adequada. 
+Sem ele, expandir a lanchonete pode acabar não dando certo, resultando em clientes insatisfeitos e impactando os negocios de forma negativa. 
+
+Para solucionar o problema, a lanchonete irá investir em um sistema de autoatendimento de fast food, que é composto por uma série de dispositivos e interfaces que permitem aos clienetes selecionar e fazer pedidos sem precisar interagir com um aendente, com as seguintes funcionalidades:
 
 ## Pedido
 * Os clints são apresentados a uma interface de seleção na qual podem optar por se identificarem via CPF, se cadastrarem com nome, email ou não se identificar, podendo montar o combo na seguinte sequencia, sendo todas elas opcionais:
@@ -57,8 +67,8 @@ As informações dispostas no sistema de pedidos precisarão ser gerenciadas pel
 # Entregas da Primeira etapa
 
 + Documentação do sistema (DDD) utilizando a linguagem ubíqua dos fluxos
-++ Realização do pedido e pagamento
-++ Preparação e entrega do pedido
+  + Realização do pedido e pagamento
+  + Preparação e entrega do pedido
 
 + Uma aplicação para todo sistema de backend (monolito) que deverá ser desenvolvido seguindo os padrões apresentados nas aulas:
 a) Arquitetura hexagonal
