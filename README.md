@@ -76,6 +76,7 @@ As informações dispostas no sistema de pedidos precisarão ser gerenciadas pel
 + Uma aplicação para todo sistema de backend (monolito) que deverá ser desenvolvido seguindo os padrões apresentados nas aulas:
 
   a) Arquitetura hexagonal
+  
   b) APIs
      + Cadastro de cliente
      + Identificação do Cliente via CPF
