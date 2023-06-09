@@ -1,0 +1,12 @@
+flake8
+Flask
+Flask-Migrate
+Flask-RESTful
+Flask-SQLAlchemy
+gunicorn
+# mypy==0.770
+psycopg2-binary
+pytest-flask
+requests
+shortuuid
+SQLAlchemy
