@@ -3,19 +3,12 @@
 # Lanchonete da Rua
 
 # Para rodar o projeto
+
+Na raiz
 ```
-pip install flask-bcrypt
+pip install -r requirements.txt
 
-pip install flask-restplus
-
-pip install Flask-Migrate
-
-pip install pyjwt
-
-pip install Flask-Script
-
-pip install flask_testing
-
+flask --app "src/main.py" run
 ```
 
 # O Problema
