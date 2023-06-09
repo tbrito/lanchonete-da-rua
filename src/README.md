@@ -6,9 +6,22 @@
 
 Na raiz
 ```
-pip install -r requirements.txt
+pip install pipenv
 
-flask --app "src/main.py" run
+$ git clone https://github.com/tbrito/lanchonete-da-rua.git
+$ cd src
+$ ./setup.sh
+$ pipenv run lanchonetedarua db create
+$ pipenv run lanchonetedarua db migrate
+$ pipenv run lanchonetedarua server
+```
+
+To run the tests:
+
+```
+$ pipenv run lanchonetedarua db create test
+$ pipenv run lanchonetedarua db migrate test
+$ pipenv run lanchonetedarua check tests
 ```
 
 # O Problema
