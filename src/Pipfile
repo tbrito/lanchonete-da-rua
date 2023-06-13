@@ -17,7 +17,7 @@ flask = "*"
 sqlalchemy = "*"
 inject = "*"
 dataclasses-json = "*"
-psycopg2 = "*"
+psycopg2-binary = "*"
 alembic = "*"
 lanchonetedarua = {editable = true,path = "."}
 
