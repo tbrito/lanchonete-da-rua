@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='lanchonetedarua',
-    version='0.0.0',
+    version='0.0.1',
     packages=['lanchonetedarua'],
     url='https://github.com/tbrito/lanchonete-da-rua',
     license='gpl-3.0',
