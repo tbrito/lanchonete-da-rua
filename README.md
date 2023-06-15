@@ -1,27 +1,22 @@
-
-
 # Lanchonete da Rua
 
 # Para rodar o projeto
 
-Na raiz
-```
-pip install pipenv
+Na raiz:
 
-$ git clone https://github.com/tbrito/lanchonete-da-rua.git
-$ cd src
-$ ./setup.sh
-$ pipenv run lanchonetedarua db create
-$ pipenv run lanchonetedarua db migrate
-$ pipenv run lanchonetedarua server
+**Construindo a imagem**:
+```
+docker build -t lanchonete-da-rua .
 ```
 
-To run the tests:
-
+**Subindo a aplicação + DB**:
 ```
-$ pipenv run lanchonetedarua db create test
-$ pipenv run lanchonetedarua db migrate test
-$ pipenv run lanchonetedarua check tests
+docker compose up
+```
+
+**Conferir se aplicação está de pé**:
+```
+http://localhost:5000/
 ```
 
 # O Problema
