@@ -19,6 +19,21 @@ docker compose up
 http://localhost:5000/
 ```
 
+# Para rodar o migrate
+
+Acesse a pasta dos migrations:
+
+> cd src\lanchonetedarua\adapters\database\migrations
+
+## Criar migrate
+```
+alembic revision -m "create account table"
+```
+
+## Rodar o migrate
+```
+alembic upgrade head
+```
 # O Problema
 Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Porém, com a expansão e sem um sistema de controle de pedidos, o atendimento aos clientes pode ser caótico e confuso. 
 
