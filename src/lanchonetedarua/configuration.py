@@ -3,15 +3,13 @@ import os
 import inject
 from flask import Flask
 
-from lanchonetedarua.adapters.database.postgres import PostgresAdapter
-from lanchonetedarua.domain.database_interface import DatabaseInterface
-
+from adapters.database.postgres import PostgresAdapter
+from domain.database_interface import DatabaseInterface
 
 def configure_application(application: Flask) -> None:
     application.config.update(
         DATABASE_URI=os.getenv('DATABASE_URI')
     )
-
 
 def configure_inject(application: Flask) -> None:
     def config(binder: inject.Binder) -> None:
