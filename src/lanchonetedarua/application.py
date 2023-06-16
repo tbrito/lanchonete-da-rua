@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Api
+
 from web.post_blueprint import example_blueprint
 from web.controllers.customers.customer_controller import customer_controller
 from web.controllers.produtos.produtos_controller import produtos_controller

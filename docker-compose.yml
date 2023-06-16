@@ -12,6 +12,7 @@ services:
       - ./src/lanchonetedarua:/app
     depends_on:
       - db
+      - migration
   
   db:
     image: postgres:15-alpine
@@ -22,3 +23,14 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: lanchonetedarua
+
+  migration:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - ./src/lanchonetedarua:/app
+    command: >
+      sh -c "cd /app/adapters/database/migrations && alembic upgrade head"

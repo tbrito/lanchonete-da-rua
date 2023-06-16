@@ -4,36 +4,21 @@
 
 Na raiz:
 
-**Construindo a imagem**:
+## Construindo a imagem:
 ```
 docker build -t lanchonete-da-rua .
 ```
 
-**Subindo a aplicação + DB**:
+## Subindo a aplicação + DB:
 ```
 docker compose up
 ```
 
-**Conferir se aplicação está de pé**:
+## Conferir se aplicação está de pé:
 ```
 http://localhost:5000/
 ```
 
-# Para rodar o migrate
-
-Acesse a pasta dos migrations:
-
-> cd src\lanchonetedarua\adapters\database\migrations
-
-## Criar migrate
-```
-alembic revision -m "create account table"
-```
-
-## Rodar o migrate
-```
-alembic upgrade head
-```
 # O Problema
 Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Porém, com a expansão e sem um sistema de controle de pedidos, o atendimento aos clientes pode ser caótico e confuso. 
 
