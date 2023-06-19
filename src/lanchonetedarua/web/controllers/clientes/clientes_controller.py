@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-customer_controller = Blueprint('customer_controller', __name__)
+customer_controller = Blueprint('cliente_controller', __name__)
 
 @customer_controller.route('/')
 def get():
