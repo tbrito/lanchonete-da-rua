@@ -1,4 +1,4 @@
-"""create customer table
+"""create cliente table
 
 Revision ID: 206a36fa943e
 Revises: 
@@ -18,9 +18,9 @@ depends_on = None
 
 def upgrade() -> None:
     op.create_table(
-        'customer',
+        'cliente',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('name', sa.String(50), nullable=False),
+        sa.Column('nome', sa.String(50), nullable=False),
         sa.Column('cpf', sa.String(11)),
         sa.Column('telefone', sa.String(50)),
         sa.Column('created_at', sa.DateTime)
@@ -28,4 +28,4 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.drop_table('customer')
+    op.drop_table('cliente')
