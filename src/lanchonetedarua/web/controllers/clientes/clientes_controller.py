@@ -1,11 +1,23 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify, request
 
-customer_controller = Blueprint('cliente_controller', __name__)
+cliente_controller = Blueprint('cliente_controller', __name__)
 
-@customer_controller.route('/')
-def get():
-    return "obter clientes"
+@cliente_controller.route('/', methods=['POST'])
+def criar_cliente():
+    dados_cliente = request.json
 
-@customer_controller.route('/')
-def post():
-    return "obter clientes"
+    cliente = {
+        'nome': dados_cliente['nome'],
+        'email': dados_cliente['email'],
+    }
+
+    return jsonify(cliente), 201
+
+@cliente_controller.route('/', methods=['GET'])
+def obter_clientes():
+    clientes = [
+        {'nome': 'Cliente 1', 'email': 'cliente1@example.com'},
+        {'nome': 'Cliente 2', 'email': 'cliente2@example.com'},
+    ]
+
+    return jsonify(clientes)
