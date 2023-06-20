@@ -1,14 +1,14 @@
-from flask import Flask
+from flask import Flask, Blueprint
+from flask_restx import Api
 
 import inject
 from inject import configure
 
 from mappings import *
 
-from web.post_blueprint import example_blueprint
-from web.controllers.clientes.cliente_controller import cliente_controller
-from web.controllers.produtos.produtos_controller import produtos_controller
-from web.controllers.categorias.categorias_controller import categorias_controller
+from web.controllers.clientes.clientes_controller import api as clientes_ns
+from web.controllers.produtos.produtos_controller import api as produtos_ns
+from web.controllers.categorias.categorias_controller import api as categorias_ns
 
 from domain.services.cliente_service import ClienteService
 
@@ -19,13 +19,22 @@ def configure_inject() -> None:
 
 def register_routers(app):
     # register routes
-    app.register_blueprint(example_blueprint)
-    app.register_blueprint(cliente_controller, url_prefix='/clientes')
-    app.register_blueprint(produtos_controller, url_prefix='/produtos')
-    app.register_blueprint(categorias_controller, url_prefix='/categorias')
+    blueprint = Blueprint('api', __name__)
+
+    api = Api(blueprint,
+          title='Lanchonete da rua',
+          version='1.0',
+          description='Api Restful da lanchonete da rua')
+
+    api.add_namespace(categorias_ns, path='/categorias')
+    api.add_namespace(clientes_ns, path='/clientes')
+    api.add_namespace(produtos_ns, path='/produtos')
+
+    app.register_blueprint(blueprint)
 
 def create_app():
     app = Flask(__name__)
+
     configure_inject()
     register_routers(app)
     return app

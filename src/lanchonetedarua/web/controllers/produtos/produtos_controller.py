@@ -1,11 +1,17 @@
-from flask import Blueprint
+from flask_restx import Resource
+from web.controllers.produtos.produto_input import ProdutoInput
 
-produtos_controller = Blueprint('produtos_controller', __name__)
+api = ProdutoInput.api
+_produto = ProdutoInput.produto
 
-@produtos_controller.route('/')
-def get():
-    return "obter produtos"
+@api.route('/')
+class Produtos(Resource):
+    @api.doc('lista de produtos')
+    def get(self):
+        return "obter produtos"
 
-@produtos_controller.route('/')
-def post():
-    return "obter produtos"
+    @api.response(201, 'Produto criado com sucesso')
+    @api.doc('inserir um novo produto')
+    @api.expect(_produto, validate=True)
+    def post(self):
+        return "obter produtos"
