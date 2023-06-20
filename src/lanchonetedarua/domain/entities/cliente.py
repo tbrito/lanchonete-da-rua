@@ -5,7 +5,6 @@ from .entity import Entity
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Cliente(Entity):
-    id: int
     nome: str
     cpf: str
     telefone: str
