@@ -33,4 +33,4 @@ services:
     volumes:
       - ./src/lanchonetedarua:/app
     command: >
-      sh -c "cd /app/adapters/database/migrations && alembic upgrade head"
+      sh -c "/tmp/wait_for_host.sh db 5432 && cd /app/adapters/database/migrations && alembic upgrade head"
