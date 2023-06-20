@@ -10,7 +10,7 @@ cliente_controller = Blueprint('cliente_controller', __name__)
 @inject.autoparams()
 def obter_clientes(cliente_service: ClienteService):
     clientes = cliente_service.obter_clientes()
-    return jsonify([asdict(cliente) for cliente in clientes])
+    return jsonify(clientes)
 
 @cliente_controller.route('/', methods=['POST'])
 def criar_clientes():

@@ -4,8 +4,8 @@ class ClienteService:
 
     def obter_clientes():
         # Lógica para obter clientes do domínio. Mock:
-        clientes = [Cliente("Joao", "12345678901", "1234567890"),
-                    Cliente("Maria", "98765432109", "0987654321")]
+        clientes = [Cliente(1, "Joao", "12345678901", "1234567890"),
+                    Cliente(2, "Maria", "98765432109", "0987654321")]
         return clientes
 
     def criar_cliente(cliente_data):
