@@ -15,9 +15,11 @@ class Clientes(Resource):
     def get(self, cliente_id):
          return "cliente por ID"
 
+    @api.doc('atualiza um cliente por id')
     def put(self, cliente_id):
         return jsonify({'mensagem': 'Cliente atualizado com sucesso'})
 
+    @api.doc('excluir um cliente por id')
     def delete(self, cliente_id):
         return jsonify({'mensagem': 'Cliente deletado com sucesso'})
 

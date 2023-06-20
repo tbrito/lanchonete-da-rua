@@ -15,6 +15,7 @@ from web.resources.produtos.produtos_resource import api as produtos_ns
 from web.resources.categorias.categorias_resource import api as categorias_ns
 
 from domain.services.cliente_service import ClienteService
+from domain.services.produto_service import ProdutoService
 
 db = SQLAlchemy()
 
@@ -22,6 +23,7 @@ def configure_inject() -> None:
     def config(binder: inject.Binder) -> None:
         # binder.bind(ClienteService, ClienteService)
         binder.bind(ClienteRepositoryChannel, ClienteRepository())
+        binder.bind(ProdutoService, ProdutoService)
     inject.configure(config)
 
 def register_routers(app):
