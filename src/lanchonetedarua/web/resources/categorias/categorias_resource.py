@@ -1,5 +1,5 @@
 from flask_restx import Resource
-from web.controllers.categorias.categoria_input import CategoriaInput
+from web.resources.categorias.categoria_input import CategoriaInput
 
 api = CategoriaInput.api
 _categoria = CategoriaInput.categoria

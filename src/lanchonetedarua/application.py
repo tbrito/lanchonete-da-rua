@@ -3,18 +3,25 @@ from flask_restx import Api
 
 import inject
 from inject import configure
+from flask_sqlalchemy import SQLAlchemy
+from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
+from adapters.repositories.cliente_repository import ClienteRepository
+from configuration import get_config
 
 from mappings import *
 
-from web.controllers.clientes.clientes_controller import api as clientes_ns
-from web.controllers.produtos.produtos_controller import api as produtos_ns
-from web.controllers.categorias.categorias_controller import api as categorias_ns
+from web.resources.clientes.clientes_resource import api as clientes_ns
+from web.resources.produtos.produtos_resource import api as produtos_ns
+from web.resources.categorias.categorias_resource import api as categorias_ns
 
 from domain.services.cliente_service import ClienteService
 
+db = SQLAlchemy()
+
 def configure_inject() -> None:
     def config(binder: inject.Binder) -> None:
-        binder.bind(ClienteService, ClienteService)
+        # binder.bind(ClienteService, ClienteService)
+        binder.bind(ClienteRepositoryChannel, ClienteRepository())
     inject.configure(config)
 
 def register_routers(app):
@@ -34,7 +41,9 @@ def register_routers(app):
 
 def create_app():
     app = Flask(__name__)
-
+    app.config.from_object(get_config('dev'))
+    db.init_app(app)
+    
     configure_inject()
     register_routers(app)
     return app

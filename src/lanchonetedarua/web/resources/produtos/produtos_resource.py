@@ -1,5 +1,5 @@
 from flask_restx import Resource
-from web.controllers.produtos.produto_input import ProdutoInput
+from web.resources.produtos.produto_input import ProdutoInput
 
 api = ProdutoInput.api
 _produto = ProdutoInput.produto

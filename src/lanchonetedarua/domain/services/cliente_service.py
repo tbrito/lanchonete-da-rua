@@ -1,25 +1,27 @@
+import inject
 from domain.entities.cliente import Cliente
+from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
 
 class ClienteService:
 
-    def obter_clientes():
-        # Lógica para obter clientes do domínio. Mock:
-        clientes = [Cliente("Joao", "12345678901", "1234567890"),
-                    Cliente("Maria", "98765432109", "0987654321")]
-        return clientes
+    @inject.autoparams()
+    def __init__(self, usuario_repository: ClienteRepositoryChannel) -> None:
+        self.usuario_repository  = usuario_repository
+ 
+    def obter_clientes(self):
+        return self.usuario_repository.get_all()
+        
+    def criar_cliente(self, cliente_data):
+        self.usuario_repository.add(cliente_data)
 
-    def criar_cliente(cliente_data):
-        # Lógica para persistir o cliente no domínio
-        ...
+    def obter_cliente_por_id(self, cliente_id):
+        return self.usuario_repository.get_by_id(cliente_id)
 
-    def obter_cliente_por_id(cliente_id):
-        # Lógica para obter um cliente pelo ID do domínio
-        ...
+    def obter_cliente_por_cpf(self, cliente_cpf):
+        return self.get_by_cpf(cliente_cpf)
+    
+    def atualizar_cliente(self, cliente_id, cliente_data):
+        self.usuario_repository.update(cliente_id, cliente_data)
 
-    def atualizar_cliente(cliente_id, cliente_data):
-        # Lógica para atualizar um cliente no domínio
-        ...
-
-    def deletar_cliente(cliente_id):
-        # Lógica para deletar um cliente do domínio
-        ...
+    def deletar_cliente(self, cliente_id):
+        self.usuario_repository.v(cliente_id)
