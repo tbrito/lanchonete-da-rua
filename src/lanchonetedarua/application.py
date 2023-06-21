@@ -4,11 +4,11 @@ from flask_restx import Api
 import inject
 from inject import configure
 from flask_sqlalchemy import SQLAlchemy
-from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
-from adapters.repositories.cliente_repository import ClienteRepository
-from configuration import get_config
 
 from mappings import *
+
+from adapters.repositories.cliente_repository import ClienteRepository
+from configuration import get_config
 
 from web.resources.clientes.clientes_resource import api as clientes_ns
 from web.resources.produtos.produtos_resource import api as produtos_ns
@@ -16,6 +16,7 @@ from web.resources.categorias.categorias_resource import api as categorias_ns
 
 from domain.services.cliente_service import ClienteService
 from domain.services.produto_service import ProdutoService
+from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
 
 db = SQLAlchemy()
 
