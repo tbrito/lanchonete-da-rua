@@ -3,7 +3,7 @@ from flask_restx import Api
 
 import inject
 from inject import configure
-from flask_sqlalchemy import SQLAlchemy
+from adapters.mappings.cliente_map import db 
 
 from mappings import *
 
@@ -17,8 +17,6 @@ from web.resources.categorias.categorias_resource import api as categorias_ns
 from domain.services.cliente_service import ClienteService
 from domain.services.produto_service import ProdutoService
 from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
-
-db = SQLAlchemy()
 
 def configure_inject() -> None:
     def config(binder: inject.Binder) -> None:
@@ -45,14 +43,14 @@ def register_routers(app):
 def create_app():
     app = Flask(__name__)
     app.config.from_object(get_config('dev'))
-    db.init_app(app)
     
     configure_inject()
     register_routers(app)
+    db.init_app(app)
     return app
 
 app = create_app()
 
 # Execução do servidor localmente
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(port=5961)

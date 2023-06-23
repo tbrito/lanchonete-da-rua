@@ -1,10 +1,11 @@
-# from utils import get_env_variable
+#from utils import get_env_variable
 import os
 
 POSTGRES_URL = "localhost:5432" #get_env_variable('POSTGRES_URL')
 POSTGRES_USER = "postgres" # get_env_variable('POSTGRES_USER')
-POSTGRES_PASSWORD = "Postgres2021!" # get_env_variable('POSTGRES_PASSWORD')
+POSTGRES_PASSWORD = "postgres" # get_env_variable('POSTGRES_PASSWORD')
 POSTGRES_DB = "lanchonetedarua" ##get_env_variable('POSTGRES_DB')
+
 
 
 class Config(object):
@@ -27,6 +28,11 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    DEVELOPMENT = True
+    
+class StagingConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
 
 
 class TestConfig(Config):
@@ -34,8 +40,7 @@ class TestConfig(Config):
 
 
 class ProductionConfig(Config):
-    # production config
-    pass
+    DEBUG = False
 
 
 def get_config(env=None):

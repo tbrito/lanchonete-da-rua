@@ -1,8 +1,10 @@
-from application import db
-
 import datetime
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class Cliente(db.Model):
+    __tablename__ = 'cliente'
     id = nome = db.Column(
         db.Integer, primary_key=True,
         unique=True, nullable=False)

@@ -5,6 +5,7 @@ from dataclasses import asdict
 
 from domain.services.cliente_service import ClienteService
 from web.resources.clientes.cliente_input import ClienteInput
+from adapters.mappings.cliente_map import Cliente
 
 api = ClienteInput.api
 _cliente = ClienteInput.cliente
@@ -28,7 +29,7 @@ class ClientesNoParameters(Resource):
     
     def get(self):
         cliente_service = ClienteService() 
-        clientes = cliente_service.obter_clientes()
+        clientes = Cliente.query.all()
         return jsonify([asdict(cliente) for cliente in clientes])
 
     @api.expect(_cliente, validate=True)

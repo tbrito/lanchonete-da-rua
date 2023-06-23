@@ -7,11 +7,8 @@ class ClienteRepository(ClienteRepositoryChannel):
         return ""
      
     def get_all(self):
-        # Lógica para obter clientes do domínio. Mock:
-        clientes = [Cliente(1, "Joao", "12345678901", "1234567890"),
-                    Cliente(2, "Maria", "98765432109", "0987654321")]
-        return clientes
-        #return cliente_map.query.all()
+      
+        return Cliente.query.all()
 
     def get_by_cpf(self, cliente_cpf):
         return "obter cpf do repositorio"    
