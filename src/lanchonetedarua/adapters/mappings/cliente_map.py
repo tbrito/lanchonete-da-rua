@@ -1,16 +1,13 @@
-from application import db
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.orm import declarative_base
 
-import datetime
+Base = declarative_base()
 
-class Cliente(db.Model):
-    id = nome = db.Column(
-        db.Integer, primary_key=True,
-        unique=True, nullable=False)
-    nome = db.Column(db.String, nullable=False)
-    cpf = db.Column(db.String, nullable=True)
-    telefone = db.Column(db.String, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+class ClienteDB(Base):
+    __tablename__ = 'cliente'
 
-    def __init__(self, nome: str, cpf: str = ''):
-        self.nome = nome
-        self.cpf = cpf
+    id = Column(Integer, primary_key=True)
+    nome = Column(String(50), nullable=False)
+    cpf = Column(String(11))
+    telefone = Column(String(50))
+    created_at = Column(DateTime)

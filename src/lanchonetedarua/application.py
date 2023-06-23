@@ -1,11 +1,9 @@
+import os
+
 from flask import Flask, Blueprint
 from flask_restx import Api
 
-import inject
-from inject import configure
 from flask_sqlalchemy import SQLAlchemy
-
-from mappings import *
 
 from adapters.repositories.cliente_repository import ClienteRepository
 from configuration import get_config
@@ -17,15 +15,17 @@ from web.resources.categorias.categorias_resource import api as categorias_ns
 from domain.services.cliente_service import ClienteService
 from domain.services.produto_service import ProdutoService
 from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
+from adapters.repositories.cliente_repository import ClienteRepository
+
+from container_di import ContainerDI
 
 db = SQLAlchemy()
 
 def configure_inject() -> None:
-    def config(binder: inject.Binder) -> None:
-        # binder.bind(ClienteService, ClienteService)
-        binder.bind(ClienteRepositoryChannel, ClienteRepository())
-        binder.bind(ProdutoService, ProdutoService)
-    inject.configure(config)
+    cliente_repository = ClienteRepository(os.getenv('DATABASE_URI'))
+    cliente_service = ClienteService(cliente_repository)
+    ContainerDI.register(ClienteService, cliente_service)
+    ContainerDI.register(ClienteRepository, cliente_service)
 
 def register_routers(app):
     # register routes

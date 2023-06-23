@@ -1,22 +1,10 @@
-# from utils import get_env_variable
 import os
-
-POSTGRES_URL = "localhost:5432" #get_env_variable('POSTGRES_URL')
-POSTGRES_USER = "postgres" # get_env_variable('POSTGRES_USER')
-POSTGRES_PASSWORD = "Postgres2021!" # get_env_variable('POSTGRES_PASSWORD')
-POSTGRES_DB = "lanchonetedarua" ##get_env_variable('POSTGRES_DB')
-
 
 class Config(object):
     DEBUG = False
     TESTING = False
-    # SQLAlchemy
-    uri_template = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'
-    SQLALCHEMY_DATABASE_URI = uri_template.format(
-        user=POSTGRES_USER,
-        pw=POSTGRES_PASSWORD,
-        url=POSTGRES_URL,
-        db=POSTGRES_DB)
+    
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
 
     # Silence the deprecation warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
