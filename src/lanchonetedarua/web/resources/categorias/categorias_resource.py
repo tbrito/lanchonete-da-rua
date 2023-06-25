@@ -24,7 +24,7 @@ class Categorias(Resource):
         categoria_data = api.payload
         categoria = CategoriaInput(**categoria_data)
         
-        if categoria_service.obter_cateroria_por_id(categoria_id) is None:
+        if categoria_service.obter_categoria_por_id(categoria_id) is None:
             return ResponseHandler.error('Categoria não encontrada')
         
         categoria_service.atualizar_categoria(categoria_id, categoria)
