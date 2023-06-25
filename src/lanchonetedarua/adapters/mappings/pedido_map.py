@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Column, Enum, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.dialects.postgresql import JSON
 
@@ -15,6 +15,6 @@ class PedidoDB(Base):
     cliente = relationship(ClienteDB)
     itens = Column(JSON)
     observacoes = Column(String())
-    status = Column(String(), default=StatusPedido.EM_ATENDIMENTO)
+    status = Column(Enum(StatusPedido))
     created_at = Column(DateTime)
     

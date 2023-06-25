@@ -34,7 +34,7 @@ class PedidoRepository(PedidoRepositoryChannel):
             pedido.cliente_id = pedido_data.cliente_id,
             pedido.itens = pedido_data.itens,
             pedido.observacoes = pedido_data.observacoes,
-            pedido.status = pedido_data.status,
+            pedido.status = pedido_data.status
             self._session.commit()
             
     def update_status(self, pedido_id, status):

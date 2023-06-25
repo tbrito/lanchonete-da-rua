@@ -26,7 +26,7 @@ class Pedidos(Resource):
         pedido_service.atualizar_pedido(pedido_id, pedido)
         
         return jsonify({'mensagem': 'pedido atualizado com sucesso'})
-
+    
     @api.doc('excluir um pedido por id')
     def delete(self, pedido_id):
         pedido_service = ContainerDI.get(PedidoService)
