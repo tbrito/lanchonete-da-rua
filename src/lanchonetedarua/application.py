@@ -6,16 +6,17 @@ from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 
 from adapters.repositories.cliente_repository import ClienteRepository
+from adapters.repositories.pedido_repository import PedidoRepository
 from configuration import get_config
 
 from web.resources.clientes.clientes_resource import api as clientes_ns
 from web.resources.produtos.produtos_resource import api as produtos_ns
 from web.resources.categorias.categorias_resource import api as categorias_ns
+from web.resources.pedidos.pedido_resource import api as pedidos_ns
 
 from domain.services.cliente_service import ClienteService
 from domain.services.produto_service import ProdutoService
-from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
-from adapters.repositories.cliente_repository import ClienteRepository
+from domain.services.pedido_service import PedidoService
 
 from container_di import ContainerDI
 
@@ -26,6 +27,11 @@ def configure_inject() -> None:
     cliente_service = ClienteService(cliente_repository)
     ContainerDI.register(ClienteService, cliente_service)
     ContainerDI.register(ClienteRepository, cliente_service)
+    
+    pedido_repository = PedidoRepository(os.getenv('DATABASE_URI'))
+    pedido_service = PedidoService(pedido_repository)
+    ContainerDI.register(PedidoService, pedido_service)
+    ContainerDI.register(PedidoRepository, pedido_service)
 
 def register_routers(app):
     # register routes
@@ -39,6 +45,7 @@ def register_routers(app):
     api.add_namespace(categorias_ns, path='/categorias')
     api.add_namespace(clientes_ns, path='/clientes')
     api.add_namespace(produtos_ns, path='/produtos')
+    api.add_namespace(pedidos_ns, path='/pedidos')
 
     app.register_blueprint(blueprint)
 
