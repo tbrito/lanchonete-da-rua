@@ -16,7 +16,7 @@ class ClienteService:
         return self.cliente_repository.get_by_id(cliente_id)
 
     def obter_cliente_por_cpf(self, cliente_cpf):
-        return self.get_by_cpf(cliente_cpf)
+        return self.cliente_repository.get_by_cpf(cliente_cpf)
     
     def atualizar_cliente(self, cliente_id, cliente_data):
         self.cliente_repository.update(cliente_id, cliente_data)
