@@ -15,6 +15,9 @@ class Categorias(Resource):
          categoria_service = ContainerDI.get(CategoriaService)
          categoria = categoria_service.obter_categoria_por_id(categoria_id)
          
+         if categoria is None:
+             return ResponseHandler.error('Categoria não encontrada', 404)
+         
          return ResponseHandler.success(categoria)
 
     @api.doc('atualiza um categoria por id')
@@ -44,7 +47,7 @@ class CategoriasNoParameters(Resource):
         categoria_service = ContainerDI.get(CategoriaService)
         categorias = categoria_service.obter_categorias()
         
-        return ResponseHandler.error(categorias)
+        return ResponseHandler.success(categorias)
 
     @api.expect(_categoria, validate=True)
     def post(self):
@@ -53,4 +56,4 @@ class CategoriasNoParameters(Resource):
         categoria = CategoriaInput(**categoria_data)
         
         categoria_service.criar_categoria(categoria)
-        return ResponseHandler.error('Categoria criado com sucesso')
+        return ResponseHandler.success('Categoria criado com sucesso')
