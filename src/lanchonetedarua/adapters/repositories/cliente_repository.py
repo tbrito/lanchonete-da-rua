@@ -54,7 +54,8 @@ class ClienteRepository(ClienteRepositoryChannel):
             id=cliente_db.id,
             nome=cliente_db.nome,
             cpf=cliente_db.cpf,
-            telefone=cliente_db.telefone
+            telefone=cliente_db.telefone,
+            created_at=cliente_db.created_at
         )
     
     def _map_entity_to_cliente_db(self, entity):

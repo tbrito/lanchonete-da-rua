@@ -20,9 +20,13 @@ class Clientes(Resource):
          return jsonify(cliente)
 
     @api.doc('atualiza um cliente por id')
-    def put(self, cliente_id, cliente):
+    @api.expect(_cliente, validate=True)
+    def put(self, cliente_id):
         cliente_service = ContainerDI.get(ClienteService)
+        cliente_data = api.payload
+        cliente = ClienteInput(**cliente_data)
         cliente_service.atualizar_cliente(cliente_id, cliente)
+        
         return jsonify({'mensagem': 'Cliente atualizado com sucesso'})
 
     @api.doc('excluir um cliente por id')
@@ -37,12 +41,14 @@ class ClientesNoParameters(Resource):
     def get(self):
         cliente_service = ContainerDI.get(ClienteService)
         clientes = cliente_service.obter_clientes()
+        
         return jsonify(clientes)
 
     @api.expect(_cliente, validate=True)
     def post(self):
         cliente_service = ContainerDI.get(ClienteService)
-        cliente_json = request.get_json() 
-        cliente = Cliente.from_dict(cliente_json)
+        cliente_data = api.payload
+        cliente = ClienteInput(**cliente_data)
+        
         cliente_service.criar_cliente(cliente)
         return jsonify({'mensagem': 'Cliente criado com sucesso'})
