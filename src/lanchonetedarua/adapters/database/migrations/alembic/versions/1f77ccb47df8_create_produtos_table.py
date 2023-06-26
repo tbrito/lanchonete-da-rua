@@ -21,7 +21,9 @@ def upgrade() -> None:
         'produto',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('nome', sa.String(50), nullable=False),
-        sa.Column('categoria_id', sa.Integer)
+        sa.Column('descricao', sa.String(100), nullable=False),
+        sa.Column('categoria_id', sa.Integer),
+        sa.Column('created_at', sa.DateTime())
     )
 
 

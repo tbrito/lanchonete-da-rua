@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from adapters.repositories.cliente_repository import ClienteRepository
 from adapters.repositories.pedido_repository import PedidoRepository
 from adapters.repositories.categoria_repository import CategoriaRepository
+from adapters.repositories.produto_repository import ProdutoRepository
 from configuration import get_config
 
 from web.resources.clientes.clientes_resource import api as clientes_ns
@@ -35,6 +36,11 @@ def configure_inject() -> None:
     pedido_service = PedidoService(pedido_repository)
     ContainerDI.register(PedidoService, pedido_service)
     ContainerDI.register(PedidoRepository, pedido_service)
+    
+    produto_repository = ProdutoRepository(os.getenv('DATABASE_URI'))
+    produto_service = ProdutoService(produto_repository)
+    ContainerDI.register(ProdutoService, produto_service)
+    ContainerDI.register(ProdutoRepository, produto_service)
     
     categoria_repository = CategoriaRepository(os.getenv('DATABASE_URI'))
     categoria_service = CategoriaService(categoria_repository)

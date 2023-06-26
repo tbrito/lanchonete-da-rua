@@ -1,29 +1,22 @@
 from domain.entities.produto import Produto
+from domain.repositories.produto_repository_channel import ProdutoRepositoryChannel
 
 class ProdutoService:
 
+    def __init__(self, produto_repository: ProdutoRepositoryChannel) -> None:
+        self.produto_repository  = produto_repository
+ 
     def obter_produtos(self):
-        # Lógica para obter produtos do domínio. Mock:
-        produtos = [Produto(1, "XBurguer", "P"),
-                    Produto(2, "XBurguer", "G"),
-                    Produto(3, "XSalada", "P"),
-                    Produto(4, "XSalada", "G"),
-                    Produto(5, "XPodrao", "P"),
-                    Produto(6, "XPodrao", "G")]
-        return produtos
-
+        return self.produto_repository.get_all()
+        
     def criar_produto(self, produto_data):
-        # Lógica para persistir o produto no domínio
-        ...
+        self.produto_repository.add(produto_data)
 
     def obter_produto_por_id(self, produto_id):
-        # Lógica para obter um produto pelo ID do domínio
-        ...
-
+        return self.produto_repository.get_by_id(produto_id)
+    
     def atualizar_produto(self, produto_id, produto_data):
-        # Lógica para atualizar um produto no domínio
-        ...
+        self.produto_repository.update(produto_id, produto_data)
 
     def deletar_produto(self, produto_id):
-        # Lógica para deletar um produto do domínio
-        ...
+        self.produto_repository.delete(produto_id)
