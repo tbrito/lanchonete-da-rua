@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, null
 from sqlalchemy.orm import sessionmaker
 
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
@@ -13,6 +13,10 @@ class PedidoRepository(PedidoRepositoryChannel):
 
     def get_by_id(self, pedido_id):
         pedido_db = self._session.query(PedidoDB).get(pedido_id)
+        
+        if pedido_db is null:
+            return None
+        
         return self._map_pedido_db_to_entity(pedido_db)
 
     def get_all(self):

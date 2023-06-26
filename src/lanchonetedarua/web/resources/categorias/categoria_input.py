@@ -5,3 +5,7 @@ class CategoriaInput:
     categoria = api.model('categorias', {
         'nome': fields.String(required=True, description='nome do categorias')
     })
+    
+    def __init__(self, nome):
+        self.nome = nome
+        

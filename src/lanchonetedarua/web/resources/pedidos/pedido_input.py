@@ -8,7 +8,7 @@ class PedidoInput():
         'cliente_id': fields.Integer(required=True, description='Id do cliente'),
         'itens': fields.Raw(required=True, description='Itens do pedido'),
         'observacoes': fields.String(description='Observações do pedido'),
-        'status': fields.String(enum=[status.name for status in StatusPedido], description='Status do pedido', default=StatusPedido.EM_ATENDIMENTO)
+        'status': fields.String(enum=[status.name for status in StatusPedido], description='Status do pedido')
     })
     
     def __init__(self, cliente_id, itens, observacoes, status):
