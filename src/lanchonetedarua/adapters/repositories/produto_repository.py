@@ -24,7 +24,11 @@ class ProdutoRepository(ProdutoRepositoryChannel):
         return self._map_produtos_db_to_entities(produtos_entity)
     
     def get_all_by_categoria_id(self, categoria_id):
-        produtos_entity = self._session.query(ProdutoDB).all()
+        produtos_entity = self._session.query(ProdutoDB).filter_by(categoria_id=categoria_id).all()
+        
+        if produtos_entity is None:
+            return None
+        
         return self._map_produtos_db_to_entities(produtos_entity)
 
     def add(self, produto):

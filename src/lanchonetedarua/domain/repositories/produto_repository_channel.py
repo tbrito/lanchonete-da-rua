@@ -10,6 +10,12 @@ class ProdutoRepositoryChannel(ABC):
     def get_all(self):
         """Obter todos os usuário."""
         pass
+    
+    
+    @abstractmethod
+    def get_all_by_categoria_id(self, categoria_id):
+        """Obter todos os usuário."""
+        pass
 
     @abstractmethod
     def add(self, produto):

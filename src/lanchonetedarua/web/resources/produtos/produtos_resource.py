@@ -46,6 +46,19 @@ class Produtos(Resource):
         
         produto_service.deletar_produto(produto_id)
         return ResponseHandler.success(produto, 'produto deletado com sucesso', 201)
+    
+@api.route('/categoria/<int:categoria_id>')
+class ProdutosByCategoria(Resource):
+   
+    @api.doc('obter produtos por categoria')
+    def get(self, categoria_id):
+         produto_service = ContainerDI.get(ProdutoService)
+         produtos = produto_service.obter_produtos_por_categoria_id(categoria_id)
+         
+         if produtos is None:
+             return ResponseHandler.error('Categoria não cadastrado', 404)
+         
+         return ResponseHandler.success(produtos)
 
 @api.route('/')
 class ProdutosNoParameters(Resource):
