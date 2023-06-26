@@ -3,8 +3,6 @@ import os
 from flask import Flask, Blueprint
 from flask_restx import Api
 
-from flask_sqlalchemy import SQLAlchemy
-
 from adapters.repositories.cliente_repository import ClienteRepository
 from adapters.repositories.pedido_repository import PedidoRepository
 from adapters.repositories.categoria_repository import CategoriaRepository
@@ -23,8 +21,6 @@ from domain.services.categoria_service import CategoriaService
 
 
 from container_di import ContainerDI
-
-db = SQLAlchemy()
 
 def configure_inject() -> None:
     cliente_repository = ClienteRepository(os.getenv('DATABASE_URI'))
@@ -65,9 +61,6 @@ def register_routers(app):
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(get_config('dev'))
-    db.init_app(app)
-    
     configure_inject()
     register_routers(app)
     return app
