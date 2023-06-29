@@ -3,16 +3,16 @@ from flask_restx import Namespace, fields
 from domain.value_objects.status_pedido import StatusPedido
 
 class PedidoInput():
-    api = Namespace('pedidos', description='operações relacionadas a pedidos')
-    pedido = api.model('pedidos', {
-        'cliente_id': fields.Integer(required=True, description='Id do cliente'),
-        'itens': fields.Raw(required=True, description='Itens do pedido'),
+    api = Namespace('pedido', description='operações relacionadas a pedidos')
+    pedido = api.model('pedido', {
+        'cliente_id': fields.Integer(required=False, description='Id do cliente'),
+        'session_id':  fields.String(required=True, description='Sessao de usuario caso nao identificado'),
         'observacoes': fields.String(description='Observações do pedido'),
-        'status': fields.String(enum=[status.name for status in StatusPedido], description='Status do pedido')
+        'status': fields.String(enum=[status.name for status in StatusPedido], description='Status do pedido'),
     })
     
-    def __init__(self, cliente_id, itens, observacoes, status):
+    def __init__(self, cliente_id, session_id, observacoes, status):
         self.cliente_id = cliente_id
-        self.itens = itens
+        self.session_id = session_id
         self.observacoes = observacoes
         self.status = status
