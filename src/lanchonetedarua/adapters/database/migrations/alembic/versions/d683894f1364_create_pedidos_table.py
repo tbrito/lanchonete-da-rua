@@ -1,13 +1,15 @@
 """create pedidos table
 
-Revision ID: 96b1525983a9
-Revises: 8f2a84a9b605
-Create Date: 2023-06-25 14:02:43.787024
+Revision ID: d683894f1364
+Revises: 7f7f5ee74d36
+Create Date: 2023-06-27 17:06:55.664570
 
 """
 from alembic import op
 import sqlalchemy as sa
 from enum import Enum
+import datetime
+
 
 class StatusPedido(Enum):
     EM_ATENDIMENTO = "Em atendimento"
@@ -18,8 +20,8 @@ class StatusPedido(Enum):
     ENTREGUE = "Entregue"
 
 # revision identifiers, used by Alembic.
-revision = '96b1525983a9'
-down_revision = '8f2a84a9b605'
+revision = 'd683894f1364'
+down_revision = '7f7f5ee74d36'
 branch_labels = None
 depends_on = None
 
@@ -28,11 +30,11 @@ def upgrade() -> None:
     op.create_table(
         'pedido',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('cliente_id', sa.Integer, sa.ForeignKey("cliente.id"), nullable=False),
-        sa.Column('itens', sa.JSON(11)),
+        sa.Column('cliente_id', sa.Integer, sa.ForeignKey("cliente.id"), nullable=True),
+        sa.Column('session_id', sa.String, nullable=False),
         sa.Column('observacoes', sa.String(100)),
         sa.Column('status', sa.Enum(StatusPedido)),
-        sa.Column('created_at', sa.DateTime),
+        sa.Column('created_at', sa.DateTime, default=datetime.datetime.now()),
     )
 
 def downgrade() -> None:

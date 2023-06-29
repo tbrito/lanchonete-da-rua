@@ -8,17 +8,28 @@ from adapters.repositories.pedido_repository import PedidoRepository
 from adapters.repositories.categoria_repository import CategoriaRepository
 from adapters.repositories.produto_repository import ProdutoRepository
 from configuration import get_config
+from adapters.repositories.item_pedido_repository import ItemPedidoRepository
+from domain.services.checkout_service import CheckoutService
+from adapters.repositories.checkout_repository import CheckoutRepository
+from adapters.repositories.fila_atendimento_repository import FilaAtendimentoRepository
+from domain.services.fila_atendimento_service import FilaAtendimentoService
 
 from web.resources.clientes.clientes_resource import api as clientes_ns
 from web.resources.produtos.produtos_resource import api as produtos_ns
 from web.resources.categorias.categorias_resource import api as categorias_ns
 from web.resources.pedidos.pedido_resource import api as pedidos_ns
+from web.resources.itens_pedido.item_pedido_resource import api as item_pedido_ns
+from web.resources.checkout.checkout_resource import api as checkout_ns
+from web.resources.fila_atendimento.fila_atendimento_resource import api as fila_ns
 
 from domain.services.cliente_service import ClienteService
 from domain.services.produto_service import ProdutoService
 from domain.services.pedido_service import PedidoService
 from domain.services.categoria_service import CategoriaService
 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from container_di import ContainerDI
 
@@ -29,10 +40,23 @@ def configure_inject() -> None:
     ContainerDI.register(ClienteRepository, cliente_service)
     
     pedido_repository = PedidoRepository(os.getenv('DATABASE_URI'))
-    pedido_service = PedidoService(pedido_repository)
+    item_pedido_repository = ItemPedidoRepository(os.getenv('DATABASE_URI'))
+    pedido_service = PedidoService(pedido_repository, item_pedido_repository)
     ContainerDI.register(PedidoService, pedido_service)
     ContainerDI.register(PedidoRepository, pedido_service)
+    ContainerDI.register(ItemPedidoRepository, pedido_service)
     
+    fila_repository = FilaAtendimentoRepository(os.getenv('DATABASE_URI'))
+    fila_service = FilaAtendimentoService(fila_repository)
+    ContainerDI.register(FilaAtendimentoService, fila_service)
+    ContainerDI.register(FilaAtendimentoRepository, fila_service)
+
+    checkout_repository = CheckoutRepository(os.getenv('DATABASE_URI'))
+    checkout_service = CheckoutService(checkout_repository, pedido_repository, fila_repository)
+    ContainerDI.register(CheckoutService, checkout_service)
+    ContainerDI.register(CheckoutRepository, checkout_service)
+    ContainerDI.register(FilaAtendimentoRepository, checkout_service)
+
     produto_repository = ProdutoRepository(os.getenv('DATABASE_URI'))
     produto_service = ProdutoService(produto_repository)
     ContainerDI.register(ProdutoService, produto_service)
@@ -56,6 +80,9 @@ def register_routers(app):
     api.add_namespace(clientes_ns, path='/clientes')
     api.add_namespace(produtos_ns, path='/produtos')
     api.add_namespace(pedidos_ns, path='/pedidos')
+    api.add_namespace(item_pedido_ns, path='/pedidos')
+    api.add_namespace(checkout_ns, path='/pedidos')
+    api.add_namespace(fila_ns, path='/pedidos')
 
     app.register_blueprint(blueprint)
 

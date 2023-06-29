@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.entities.pedido import Pedido
 from adapters.mappings.pedido_map import PedidoDB
+from domain.value_objects.status_pedido import StatusPedido
 
 class PedidoRepository(PedidoRepositoryChannel):
     def __init__(self, database_uri: str):
@@ -12,6 +13,7 @@ class PedidoRepository(PedidoRepositoryChannel):
         self._session = Session()
 
     def get_by_id(self, pedido_id):
+        
         pedido_db = self._session.query(PedidoDB).get(pedido_id)
         
         if pedido_db is null:
@@ -36,7 +38,7 @@ class PedidoRepository(PedidoRepositoryChannel):
         pedido = self._session.query(PedidoDB).get(pedido_id)
         if pedido:
             pedido.cliente_id = pedido_data.cliente_id,
-            pedido.itens = pedido_data.itens,
+            pedido.session_id = pedido_data.session_id,
             pedido.observacoes = pedido_data.observacoes,
             pedido.status = pedido_data.status
             self._session.commit()
@@ -44,7 +46,7 @@ class PedidoRepository(PedidoRepositoryChannel):
     def update_status(self, pedido_id, status):
         pedido = self._session.query(PedidoDB).get(pedido_id)
         if pedido:
-            pedido.status = status,
+            pedido.status = status
             self._session.commit()
 
     def delete(self, pedido_id):
@@ -64,7 +66,7 @@ class PedidoRepository(PedidoRepositoryChannel):
         return Pedido(
             id=pedido_db.id,
             cliente_id = pedido_db.cliente_id,
-            itens = pedido_db.itens,
+            session_id = pedido_db.session_id,
             observacoes = pedido_db.observacoes,
             status = pedido_db.status,
             created_at=pedido_db.created_at
@@ -75,7 +77,7 @@ class PedidoRepository(PedidoRepositoryChannel):
             return None
         return PedidoDB(
             cliente_id = entity.cliente_id,
-            itens = entity.itens,
+            session_id = entity.session_id,
             observacoes = entity.observacoes,
             status = entity.status
         )

@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import declarative_base
 
@@ -10,4 +11,4 @@ class ClienteDB(Base):
     nome = Column(String(50), nullable=False)
     cpf = Column(String(11))
     telefone = Column(String(50))
-    created_at = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.datetime.now())

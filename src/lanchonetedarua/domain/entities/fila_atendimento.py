@@ -5,10 +5,10 @@ from .entity import Entity
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
-class Categoria(Entity):
-    nome: str
-    
-    def __init__(self, id, nome, created_at):
+class FilaAtendimento(Entity):
+    def __init__(self, id, pedido_id, recebido_em, finalizado_em, created_at):
         super().__init__(id, created_at)
-        self.nome = nome
+        self.pedido_id = pedido_id
+        self.recebido_em = recebido_em
+        self.finalizado_em = finalizado_em
         self.created_at = created_at

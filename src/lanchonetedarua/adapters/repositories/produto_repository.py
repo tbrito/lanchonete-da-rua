@@ -66,8 +66,8 @@ class ProdutoRepository(ProdutoRepositoryChannel):
         return Produto(
             id=produto_db.id,
             nome=produto_db.nome,
-            categoria_id = produto_db.categoria_id,
             descricao = produto_db.descricao,
+            categoria_id = produto_db.categoria_id,
             created_at=produto_db.created_at
         )
     
