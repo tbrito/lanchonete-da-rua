@@ -19,7 +19,7 @@ depends_on = None
 def upgrade() -> None:
     categoria_table = op.create_table(
         'categoria',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('nome', sa.String(50), nullable=False),
         sa.Column('created_at', sa.DateTime, default=datetime.datetime.now()),
     )
@@ -27,11 +27,11 @@ def upgrade() -> None:
     op.bulk_insert(
         categoria_table,
         [
-            { "id": 1, "nome": "Lanche" },
-            { "id": 2, "nome": "Acompanhamento" },
-            { "id": 3, "nome": "Bebida" },
-            { "id": 4, "nome": "Sobremesa" },
-            { "id": 5, "nome": "Combo" },
+            { "nome": "Lanche" },
+            { "nome": "Acompanhamento" },
+            { "nome": "Bebida" },
+            { "nome": "Sobremesa" },
+            { "nome": "Combo" },
         ],
     )
 

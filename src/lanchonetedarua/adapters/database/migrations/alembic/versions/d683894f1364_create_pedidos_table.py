@@ -29,7 +29,7 @@ depends_on = None
 def upgrade() -> None:
     op.create_table(
         'pedido',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('cliente_id', sa.Integer, sa.ForeignKey("cliente.id"), nullable=True),
         sa.Column('session_id', sa.String, nullable=False),
         sa.Column('observacoes', sa.String(100)),

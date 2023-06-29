@@ -19,7 +19,7 @@ depends_on = None
 def upgrade() -> None:
     cliente_table = op.create_table(
         'cliente',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('nome', sa.String(50), nullable=False),
         sa.Column('cpf', sa.String(11)),
         sa.Column('telefone', sa.String(50)),
@@ -29,8 +29,8 @@ def upgrade() -> None:
     op.bulk_insert(
         cliente_table,
         [
-            { "id": 1, "nome": "Maitê Stefany Campos", "cpf": "33112357388", "telefone": "(98)3694-9053" },
-            { "id": 2, "nome": "Tiago Francisco Rezende", "cpf": "41631876694", "telefone": "(84)3534-6341" }
+            { "nome": "Maitê Stefany Campos", "cpf": "33112357388", "telefone": "(98)3694-9053" },
+            { "nome": "Tiago Francisco Rezende", "cpf": "41631876694", "telefone": "(84)3534-6341" }
         ]
     )
 

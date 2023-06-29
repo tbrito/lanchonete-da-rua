@@ -12,7 +12,7 @@ class PedidoDB(Base):
     # __allow_unmapped__ = True
     __tablename__ = 'pedido'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     session_id = Column(String())
     cliente_id = Column(Integer, ForeignKey(ClienteDB.id))
     cliente = relationship(ClienteDB)
