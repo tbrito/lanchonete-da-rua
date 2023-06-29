@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.entities.pedido import Pedido
 from adapters.mappings.pedido_map import PedidoDB
+from domain.value_objects.status_pedido import StatusPedido
 
 class PedidoRepository(PedidoRepositoryChannel):
     def __init__(self, database_uri: str):
@@ -45,7 +46,7 @@ class PedidoRepository(PedidoRepositoryChannel):
     def update_status(self, pedido_id, status):
         pedido = self._session.query(PedidoDB).get(pedido_id)
         if pedido:
-            pedido.status = status,
+            pedido.status = status
             self._session.commit()
 
     def delete(self, pedido_id):

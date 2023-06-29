@@ -10,6 +10,7 @@ import sqlalchemy as sa
 from enum import Enum
 import datetime
 
+
 class StatusPedido(Enum):
     EM_ATENDIMENTO = "Em atendimento"
     FINALIZADO_PARA_PAGAMENTO = "Pedido finalizado aguardando pagamento"
@@ -35,7 +36,6 @@ def upgrade() -> None:
         sa.Column('status', sa.Enum(StatusPedido)),
         sa.Column('created_at', sa.DateTime, default=datetime.datetime.now()),
     )
-
 
 def downgrade() -> None:
     op.drop_table('pedido')

@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import Column, Enum, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import Mapped, declarative_base, relationship, mapped_column
 from typing import List
@@ -17,4 +18,4 @@ class PedidoDB(Base):
     cliente = relationship(ClienteDB)
     observacoes = Column(String())
     status = Column(Enum(StatusPedido))
-    created_at = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.datetime.now())

@@ -67,7 +67,7 @@ class ProdutosNoParameters(Resource):
         produto_service = ContainerDI.get(ProdutoService)
         produtos = produto_service.obter_produtos()
         
-        return ResponseHandler.success(data=produtos, status_code=200)
+        return ResponseHandler.success(produtos, status_code=200)
 
     @api.expect(_produto, validate=True)
     def post(self):

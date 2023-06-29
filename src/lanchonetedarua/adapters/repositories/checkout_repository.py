@@ -10,8 +10,8 @@ class CheckoutRepository(CheckoutRepositoryChannel):
         Session = sessionmaker(engine)
         self._session = Session()
 
-    def add(self, categoria):
-        checkout_db = self._map_entity_to_checkout_db(categoria)
+    def add(self, checkout):
+        checkout_db = self._map_entity_to_checkout_db(checkout)
         self._session.add(checkout_db)
         self._session.commit()
 
@@ -24,6 +24,5 @@ class CheckoutRepository(CheckoutRepositoryChannel):
         return CheckoutDB(
             pedido_id=entity.pedido_id,
             valor_total=entity.valor_total,
-            data_pagamento=entity.data_pagamento,
-            status=entity.status
+            data_pagamento=entity.data_pagamento
         )

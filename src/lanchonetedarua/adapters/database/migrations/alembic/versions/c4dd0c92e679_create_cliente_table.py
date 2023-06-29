@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    op.create_table(
+    cliente_table = op.create_table(
         'cliente',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('nome', sa.String(50), nullable=False),
@@ -26,6 +26,13 @@ def upgrade() -> None:
         sa.Column('created_at', sa.DateTime, default=datetime.datetime.now())
     )
 
+    op.bulk_insert(
+        cliente_table,
+        [
+            { "id": 1, "nome": "Maitê Stefany Campos", "cpf": "33112357388", "telefone": "(98)3694-9053" },
+            { "id": 2, "nome": "Tiago Francisco Rezende", "cpf": "41631876694", "telefone": "(84)3534-6341" }
+        ]
+    )
 
 def downgrade() -> None:
     op.drop_table('cliente')

@@ -8,14 +8,8 @@ Create Date: 2023-06-27 19:18:23.836466
 from alembic import op
 import sqlalchemy as sa
 import datetime
-
 from enum import Enum
 
-class StatusCheckout(Enum):
-    AGUARDANDO_PAGAMENTO = "Aguardando pagamento"
-    PAGO = "Pedido pago"
-    ABANDONADO = "Checkout abandonado"
-    
 # revision identifiers, used by Alembic.
 revision = '45b872dec76d'
 down_revision = '523857c2e8b1'
@@ -30,7 +24,6 @@ def upgrade() -> None:
         sa.Column('pedido_id', sa.Integer, nullable=True),
         sa.Column('valor_total', sa.Float, nullable=True),
         sa.Column('data_pagamento', sa.DateTime, nullable=True),
-        sa.Column('status', sa.Enum(StatusCheckout), nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False, default=datetime.datetime.now())
     )
 

@@ -6,17 +6,13 @@ from web.response_handle.response_handler import ResponseHandler
 from container_di import ContainerDI
 
 api = CheckoutInput.api
-_checkout = CheckoutInput.checkout
+# _checkout = CheckoutInput.checkout
 
 @api.route('/<string:pedido_id>/checkout')
 class Checkout(Resource):
     @api.doc('Checkout de pedidos')
-    @api.expect(_checkout)
     def post(self, pedido_id):
         checkout_service = ContainerDI.get(CheckoutService)
-        
-        checkout_data = api.payload
-        checkout = CheckoutInput(**checkout_data)
-        checkout_service.criar_checkout_para_pedido(checkout)
+        checkout = checkout_service.criar_checkout_para_pedido(pedido_id)
 
-        return ResponseHandler.success('checkout realizado com sucesso', 201)
+        return ResponseHandler.success(checkout, 'checkout realizado com sucesso', 201)
