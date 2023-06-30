@@ -20,7 +20,7 @@ depends_on = None
 def upgrade() -> None:
     op.create_table(
         'checkout',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('pedido_id', sa.Integer, nullable=True),
         sa.Column('valor_total', sa.Float, nullable=True),
         sa.Column('data_pagamento', sa.DateTime, nullable=True),

@@ -21,7 +21,7 @@ depends_on = None
 def upgrade() -> None:
     op.create_table(
         'fila_atendimento',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('pedido_id', sa.Integer, nullable=False),
         sa.Column('recebido_em', sa.DateTime, nullable=False, default=datetime.datetime.now()),
         sa.Column('finalizado_em', sa.DateTime, nullable=True)

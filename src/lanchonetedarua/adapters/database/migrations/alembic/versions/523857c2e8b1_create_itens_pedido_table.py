@@ -19,7 +19,7 @@ depends_on = None
 def upgrade() -> None:
     op.create_table(
         'item_pedido',
-        sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
         sa.Column('produto_id', sa.Integer, sa.ForeignKey("produto.id"), nullable=False),
         sa.Column('pedido_id', sa.Integer, sa.ForeignKey("pedido.id"), nullable=False),
         sa.Column('quantidade', sa.Integer),

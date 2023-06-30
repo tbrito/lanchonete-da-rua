@@ -10,7 +10,7 @@ class ItemPedidoBD(Base):
     # __allow_unmapped__ = True
     __tablename__ = 'item_pedido'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     pedido_id = Column(Integer, ForeignKey(PedidoDB.id))
     pedido = relationship(PedidoDB)
     produto_id = Column(Integer, ForeignKey(ProdutoDB.id))

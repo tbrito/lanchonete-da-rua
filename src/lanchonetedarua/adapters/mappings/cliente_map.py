@@ -7,7 +7,7 @@ Base = declarative_base()
 class ClienteDB(Base):
     __tablename__ = 'cliente'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(50), nullable=False)
     cpf = Column(String(11))
     telefone = Column(String(50))
