@@ -42,7 +42,8 @@ class FilaAtendimentoRepository(FilaAtendimentoRepositoryChannel):
             id=fila_db.id,
             pedido_id=fila_db.pedido_id,
             recebido_em=fila_db.recebido_em,
-            finalizado_em=fila_db.finalizado_em
+            finalizado_em=fila_db.finalizado_em,
+            created_at=fila_db.created_at
         )
     
     def _map_entity_to_fila_db(self, entity):

@@ -11,4 +11,5 @@ class FilaAtendimentoDB(Base):
     pedido_id = Column(String(50), nullable=False)
     recebido_em = Column(DateTime, default=datetime.datetime.now())
     finalizado_em = Column(DateTime)
-    
+    created_at = Column(DateTime)
+

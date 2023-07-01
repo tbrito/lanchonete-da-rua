@@ -1,8 +1,4 @@
 from flask_restx import Resource
-from flask import jsonify
-from flask import request
-
-from domain.entities.cliente import Cliente
 from domain.services.cliente_service import ClienteService
 from web.response_handle.response_handler import ResponseHandler
 from web.resources.clientes.cliente_input import ClienteInput
@@ -79,6 +75,5 @@ class ClientesNoParameters(Resource):
         cliente_service = ContainerDI.get(ClienteService)
         cliente_data = api.payload
         cliente = ClienteInput(**cliente_data)
-        
         cliente_service.criar_cliente(cliente)
         return ResponseHandler.success(message='Cliente criado com sucesso')

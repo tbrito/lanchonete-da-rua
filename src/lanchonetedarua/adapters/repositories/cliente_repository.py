@@ -24,6 +24,12 @@ class ClienteRepository(ClienteRepositoryChannel):
         return self._map_cliente_db_to_entity(cliente_db)
 
     def add(self, cliente):
+        import logging
+        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+        logging.debug(cliente.cpf)
+        logging.debug(cliente.cpf.valor)
+
         cliente_db = self._map_entity_to_cliente_db(cliente)
         self._session.add(cliente_db)
         self._session.commit()
@@ -50,6 +56,7 @@ class ClienteRepository(ClienteRepositoryChannel):
     def _map_cliente_db_to_entity(self, cliente_db):
         if cliente_db is None:
             return None
+
         return Cliente(
             id=cliente_db.id,
             nome=cliente_db.nome,
@@ -61,8 +68,13 @@ class ClienteRepository(ClienteRepositoryChannel):
     def _map_entity_to_cliente_db(self, entity):
         if entity is None:
             return None
+        import logging
+        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.debug(entity.cpf)
+        logging.debug(entity.cpf.valor)
+
         return ClienteDB(
             nome=entity.nome,
-            cpf=entity.cpf,
+            cpf=entity.cpf.valor,
             telefone=entity.telefone
         )
