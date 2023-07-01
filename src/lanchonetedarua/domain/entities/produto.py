@@ -5,6 +5,9 @@ from .entity import Entity
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Produto(Entity):
+    nome: str
+    descricao: str
+    categoria_id: int
     def __init__(self, id, nome, descricao, categoria_id, created_at):
         super().__init__(id, created_at)
         self.nome = nome
