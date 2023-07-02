@@ -1,12 +1,16 @@
 class CPF:
     def __init__(self, valor):
+        if not valor:
+            self.valor = None
+            return
+
         cpf_limpo = self._limpar_cpf(valor)
 
         if self._validar(list(map(int, cpf_limpo))):
             self.valor = cpf_limpo
+            return
 
-        else:
-            self.valor = None
+        self.valor = None
 
     def _limpar_cpf(self, cpf):
         return ''.join(filter(str.isdigit, cpf))

@@ -5,6 +5,8 @@ from web.resources.clientes.cliente_input import ClienteInput
 
 from container_di import ContainerDI
 
+from web.mappers.cliente_mapper import ClienteMapper
+
 api = ClienteInput.api
 _cliente = ClienteInput.cliente
 
@@ -14,7 +16,9 @@ class Clientes(Resource):
     def get(self, cliente_id):
          cliente_service = ContainerDI.get(ClienteService)
          cliente = cliente_service.obter_cliente_por_id(cliente_id)
-         return ResponseHandler.success(cliente)
+         clientes_output = ClienteMapper.cliente_dominio_para_resposta(cliente)
+
+         return ResponseHandler.success(clientes_output)
      
     @api.doc('atualiza um cliente por id')
     @api.expect(_cliente, validate=True)
@@ -52,11 +56,12 @@ class ClienteByCPF(Resource):
     def get(self, cpf):
          cliente_service = ContainerDI.get(ClienteService)
          cliente = cliente_service.obter_cliente_por_cpf(cpf)
-         
+         clientes_output = ClienteMapper.cliente_dominio_para_resposta(cliente)
+
          if cliente is None:
              return ResponseHandler.error('Cliente não cadastrado', 404)
          
-         return ResponseHandler.success(cliente)
+         return ResponseHandler.success(clientes_output)
 
 
 @api.route('/')
@@ -66,8 +71,8 @@ class ClientesNoParameters(Resource):
     def get(self):
         cliente_service = ContainerDI.get(ClienteService)
         clientes = cliente_service.obter_clientes()
-        
-        return ResponseHandler.success(clientes)
+        clientes_output = list(map(ClienteMapper.cliente_dominio_para_resposta, clientes))
+        return ResponseHandler.success(clientes_output)
     
     @api.doc('Criar um cliente')
     @api.expect(_cliente, validate=True)
@@ -76,4 +81,5 @@ class ClientesNoParameters(Resource):
         cliente_data = api.payload
         cliente = ClienteInput(**cliente_data)
         cliente_service.criar_cliente(cliente)
+
         return ResponseHandler.success(message='Cliente criado com sucesso')

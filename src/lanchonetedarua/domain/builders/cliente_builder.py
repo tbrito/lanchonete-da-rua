@@ -1,4 +1,3 @@
-from domain.value_objects.cpf import CPF
 from domain.entities.cliente import Cliente
 
 class ClienteBuilder:

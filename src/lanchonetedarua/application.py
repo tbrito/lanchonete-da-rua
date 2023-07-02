@@ -8,7 +8,6 @@ from adapters.repositories.cliente_repository import ClienteRepository
 from adapters.repositories.pedido_repository import PedidoRepository
 from adapters.repositories.categoria_repository import CategoriaRepository
 from adapters.repositories.produto_repository import ProdutoRepository
-from configuration import get_config
 from adapters.repositories.item_pedido_repository import ItemPedidoRepository
 from domain.services.checkout_service import CheckoutService
 from adapters.repositories.checkout_repository import CheckoutRepository

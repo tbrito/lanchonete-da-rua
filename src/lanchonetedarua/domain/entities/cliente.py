@@ -1,10 +1,6 @@
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json, LetterCase
 from .entity import Entity
 from ..value_objects.cpf import CPF
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
 class Cliente(Entity):
     nome: str
     cpf: CPF
