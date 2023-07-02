@@ -1,5 +1,4 @@
 from flask_restx import Resource
-from domain.services.checkout_service import CheckoutService
 from web.response_handle.response_handler import ResponseHandler
 
 from domain.services.pedido_service import PedidoService
