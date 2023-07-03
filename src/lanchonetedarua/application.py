@@ -49,7 +49,7 @@ def configure_inject() -> None:
     ContainerDI.register(FilaAtendimentoRepository, fila_service)
 
     checkout_repository = CheckoutRepository(database_uri)
-    checkout_service = CheckoutService(checkout_repository, pedido_repository, fila_repository)
+    checkout_service = CheckoutService(checkout_repository, pedido_repository, fila_repository, item_pedido_repository)
     ContainerDI.register(CheckoutService, checkout_service)
     ContainerDI.register(CheckoutRepository, checkout_service)
     ContainerDI.register(FilaAtendimentoRepository, checkout_service)
