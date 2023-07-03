@@ -17,8 +17,6 @@ class CheckoutService:
         self.fila_atendimento_repository = fila_atendimento_repository
 
     def criar_checkout_para_pedido(self, pedido_id):
-        # TODO: não está atualizando status
-        #self.pedido_repository.update_status(pedido_id, StatusPedido.AGUARDANDO_PREPARO)
 
         checkout = Checkout(
             id=0,
@@ -28,6 +26,7 @@ class CheckoutService:
             created_at=datetime.datetime.now()
         )
         self.checkout_repository.add(checkout)
+        self.pedido_repository.update_status(pedido_id, StatusPedido.AGUARDANDO_PREPARO)
 
         fila = FilaAtendimento(
             id=0,

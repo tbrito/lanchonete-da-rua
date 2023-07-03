@@ -1,5 +1,4 @@
 from flask_restx import Resource
-from flask import jsonify
 from container_di import ContainerDI
 from domain.services.fila_atendimento_service import FilaAtendimentoService
 from web.resources.fila_atendimento.fila_input import FilaAtendimentoInput
