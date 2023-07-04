@@ -24,15 +24,12 @@ class ClienteRepository(ClienteRepositoryChannel):
         return self._map_cliente_db_to_entity(cliente_db)
 
     def add(self, cliente):
-        import logging
-        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
-        logging.debug(cliente.cpf)
-        logging.debug(cliente.cpf.valor)
 
         cliente_db = self._map_entity_to_cliente_db(cliente)
         self._session.add(cliente_db)
         self._session.commit()
+
+        return cliente_db
 
     def update(self, cliente_id, cliente_data):
         cliente = self._session.query(ClienteDB).get(cliente_id)
@@ -41,6 +38,7 @@ class ClienteRepository(ClienteRepositoryChannel):
             cliente.cpf = cliente_data.cpf
             cliente.telefone = cliente_data.telefone
             self._session.commit()
+            return cliente
 
     def delete(self, cliente_id):
         cliente = self._session.query(ClienteDB).get(cliente_id)

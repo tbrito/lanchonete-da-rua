@@ -79,7 +79,10 @@ class ClientesNoParameters(Resource):
     def post(self):
         cliente_service = ContainerDI.get(ClienteService)
         cliente_data = api.payload
-        cliente = ClienteInput(**cliente_data)
-        cliente_service.criar_cliente(cliente)
+        cliente_input = ClienteInput(**cliente_data)
 
-        return ResponseHandler.success(message='Cliente criado com sucesso', status_code=201)
+        cliente = cliente_service.criar_cliente(cliente_input)
+
+        cliente_output = obter_cliente_output.dump(cliente)
+
+        return ResponseHandler.success(cliente_output, status_code=201)
