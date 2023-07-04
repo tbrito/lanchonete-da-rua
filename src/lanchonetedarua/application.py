@@ -2,6 +2,7 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask, Blueprint
+from flask_marshmallow import Marshmallow
 from flask_restx import Api
 
 from adapters.repositories.cliente_repository import ClienteRepository
@@ -86,6 +87,7 @@ def register_routers(app):
 def create_app():
     load_dotenv()
     app = Flask(__name__)
+    ma = Marshmallow(app)
     configure_inject()
     register_routers(app)
     return app
