@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.8'
 services:
   app:
     build:
@@ -6,23 +6,27 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5000:5000
-    environment:
-      - DATABASE_URI=postgresql://postgres:postgres@db:5432/lanchonetedarua
+    env_file:
+      - dev.env
     volumes:
       - ./src/lanchonetedarua:/app
     depends_on:
       - db
       - migration
+    networks:
+      - lanchonetedarua_network
   
   db:
     image: postgres:15-alpine
     restart: always
     ports:
       - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: lanchonetedarua
+    env_file:
+      - dev.env
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    networks:
+      - lanchonetedarua_network
 
   migration:
     build:
@@ -34,3 +38,8 @@ services:
       - ./src/lanchonetedarua:/app
     command: >
       sh -c "/tmp/wait_for_host.sh db 5432 && cd /app/adapters/database/migrations && alembic upgrade head"
+    networks:
+      - lanchonetedarua_network
+
+networks:
+  lanchonetedarua_network:
