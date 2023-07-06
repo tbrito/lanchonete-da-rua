@@ -43,10 +43,10 @@ class Clientes(Resource):
         cliente = cliente_service.obter_cliente_por_id(cliente_id)
         
         if cliente is None:
-            return ResponseHandler.error('Cliente não existe')
+            return ResponseHandler.error('Cliente não existe', 404)
         
         cliente_service.deletar_cliente(cliente_id)
-        return ResponseHandler.success(data=cliente ,message='Cliente deletado com sucesso', status_code=201)
+        return ResponseHandler.success(message='Cliente deletado com sucesso', status_code=201)
     
     
 @api.route('/cpf/<string:cpf>')

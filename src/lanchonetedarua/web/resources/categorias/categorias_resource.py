@@ -38,7 +38,7 @@ class Categorias(Resource):
     def delete(self, categoria_id):
         categoria_service = ContainerDI.get(CategoriaService)
         categoria_service.deletar_categoria(categoria_id)
-        return ResponseHandler.error('Categoria deletado com sucesso')
+        return ResponseHandler.success('Categoria deletado com sucesso')
 
 @api.route('/')
 class CategoriasNoParameters(Resource):

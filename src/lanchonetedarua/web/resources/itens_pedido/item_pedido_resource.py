@@ -24,20 +24,22 @@ class PedidosAdicionarItens(Resource):
 
 @api.route('/<string:pedido_id>/itens/<string:item_pedido_id>')
 class PedidosEditarItens(Resource):
-    @api.doc('Adicionar um item ao pedido')
+    @api.doc('Atualizar um item do pedido')
     @api.expect(_item_pedido, validate=True)
-    def put(self, pedido_id, item_pedido_id, _item_pedido):
+    def put(self, pedido_id, item_pedido_id):
         pedido_service = ContainerDI.get(PedidoService)
-        pedido_service.editar_item_pedido(pedido_id, item_pedido_id, _item_pedido)
-        return ResponseHandler.success(_item_pedido, 'item editado com sucesso', 201)
+        item_pedido_data = api.payload
+        item_pedido = ItensPedidoInput(**item_pedido_data)
+        pedido_service.editar_item_pedido(pedido_id, item_pedido_id, item_pedido)
+        return ResponseHandler.success(item_pedido, 'item editado com sucesso', 201)
 
-    @api.doc('excluir um pedido por id')
+    @api.doc('excluir um item pedido por id')
     def delete(self, pedido_id, item_pedido_id):
         pedido_service = ContainerDI.get(PedidoService)
         item_pedido = pedido_service.obter_item_pedido_por_id(item_pedido_id)
         
         if item_pedido is None:
-            return ResponseHandler.error('Pedido não existe', 400)
+            return ResponseHandler.error('Pedido não existe', 404)
         
         pedido_service.deletar_item_pedido(item_pedido)
         return ResponseHandler.success(item_pedido, 'item do pedido excluido com sucesso', 201)
