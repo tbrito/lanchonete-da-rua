@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Float, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, declarative_base, relationship, mapped_column
 
-from adapters.mappings.produto_map import ProdutoDB
-from adapters.mappings.pedido_map import PedidoDB
+from adapters.mappings.produto_db import ProdutoDB
+from adapters.mappings.pedido_db import PedidoDB
 
 Base = declarative_base()
 

@@ -21,7 +21,7 @@ def upgrade() -> None:
     op.create_table(
         'checkout',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=True),
-        sa.Column('pedido_id', sa.Integer, nullable=True),
+        sa.Column('pedido_id', sa.Integer, sa.ForeignKey("pedido.id"), nullable=False),
         sa.Column('valor_total', sa.Float, nullable=True),
         sa.Column('data_pagamento', sa.DateTime, nullable=True),
         sa.Column('created_at', sa.DateTime, nullable=False, default=datetime.datetime.now())

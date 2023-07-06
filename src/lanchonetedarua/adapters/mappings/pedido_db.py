@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, declarative_base, relationship, mapped_column
 from typing import List
 
 from domain.value_objects.status_pedido import StatusPedido
-from .cliente_map import ClienteDB
+from .cliente_db import ClienteDB
 
 Base = declarative_base()
 
