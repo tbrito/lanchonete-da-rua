@@ -13,7 +13,5 @@ class ObterClienteOutput(ma.Schema):
     telefone = fields.String()
     created_at = fields.DateTime()
 
-
-
 obter_cliente_output = ObterClienteOutput()
 obter_clientes_output = ObterClienteOutput(many=True)

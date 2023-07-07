@@ -2,6 +2,7 @@ from flask_restx import Resource
 from container_di import ContainerDI
 from domain.services.produto_service import ProdutoService
 from domain.services.categoria_service import CategoriaService
+from web.resources.produtos.produto_output import produto_output, produtos_output
 from web.resources.produtos.produto_input import ProdutoInput
 from web.response_handle.response_handler import ResponseHandler
 
@@ -15,10 +16,12 @@ class Produtos(Resource):
          produto_service = ContainerDI.get(ProdutoService)
          produto = produto_service.obter_produto_por_id(produto_id)
          
+         output = produto_output.dump(produto)
+
          if produto:
              ResponseHandler.error('Produto não encontrado',404)
          
-         return ResponseHandler.success(produto, status_code=200)
+         return ResponseHandler.success(output, status_code=200)
 
     @api.doc('atualiza um produto por id')
     @api.expect(_produto, validate=True)
@@ -54,11 +57,12 @@ class ProdutosByCategoria(Resource):
     def get(self, categoria_id):
          produto_service = ContainerDI.get(ProdutoService)
          produtos = produto_service.obter_produtos_por_categoria_id(categoria_id)
-         
+         output = produtos_output.dump(produtos)
+
          if produtos is None:
              return ResponseHandler.error('Categoria não cadastrado', 404)
          
-         return ResponseHandler.success(produtos)
+         return ResponseHandler.success(output)
 
 @api.route('/')
 class ProdutosNoParameters(Resource):
@@ -66,8 +70,8 @@ class ProdutosNoParameters(Resource):
     def get(self):
         produto_service = ContainerDI.get(ProdutoService)
         produtos = produto_service.obter_produtos()
-        
-        return ResponseHandler.success(produtos, status_code=200)
+        output = produtos_output.dump(produtos)
+        return ResponseHandler.success(output, status_code=200)
 
     @api.expect(_produto, validate=True)
     def post(self):
