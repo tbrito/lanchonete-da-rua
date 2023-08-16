@@ -25,6 +25,7 @@ class CategoriaRepository(CategoriaRepositoryChannel):
         categoria_db = CategoriaMapper.map_entity_to_categoria_db(categoria)
         self._session.add(categoria_db)
         self._session.commit()
+        return CategoriaMapper.map_categoria_db_to_entity(categoria_db)
 
     def update(self, categoria_id, categoria_data):
         categoria = self._session.query(CategoriaDB).get(categoria_id)
