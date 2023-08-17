@@ -47,6 +47,6 @@ class CPF:
 
     def formatado(self):
         cpf_formatado = '{}.{}.{}-{}'.format(
-            self.cpf[:3], self.cpf[3:6], self.cpf[6:9], self.cpf[9:]
+            self.valor[:3], self.valor[3:6], self.valor[6:9], self.valor[9:]
         )
         return cpf_formatado

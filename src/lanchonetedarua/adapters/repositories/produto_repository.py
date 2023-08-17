@@ -35,6 +35,7 @@ class ProdutoRepository(ProdutoRepositoryChannel):
         produto_db = ProdutoMapper.map_entity_to_produto_db(produto)
         self._session.add(produto_db)
         self._session.commit()
+        return ProdutoMapper.map_produto_db_to_entity(produto_db)
 
     def update(self, produto_id, produto_data):
         produto = self._session.query(ProdutoDB).get(produto_id)
