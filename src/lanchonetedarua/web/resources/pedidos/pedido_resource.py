@@ -33,3 +33,4 @@ class PedidosNoParameter(Resource):
         pedido_service.criar_pedido(pedido)
 
         return ResponseHandler.success(message= 'pedido criado sucesso', status_code=201)
+    

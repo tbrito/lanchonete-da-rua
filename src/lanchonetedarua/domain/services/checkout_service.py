@@ -32,7 +32,9 @@ class CheckoutService:
             created_at=datetime.datetime.now()
         )
         self.checkout_repository.add(checkout)
-        self.pedido_repository.update_status(pedido_id, StatusPedido.AGUARDANDO_PREPARO)
+        pedido = self.pedido_repository.get_by_id(pedido_id)
+        pedido.status.avancar()
+        self.pedido_repository.update(pedido)
 
         fila = FilaAtendimento(
             id=0,

@@ -17,5 +17,5 @@ class PedidoDB(Base):
     cliente_id = Column(Integer, ForeignKey(ClienteDB.id))
     cliente = relationship(ClienteDB)
     observacoes = Column(String())
-    status = Column(Enum(StatusPedido))
+    status = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.now())

@@ -43,12 +43,6 @@ class PedidoRepository(PedidoRepositoryChannel):
             pedido.status = pedido_data.status
             self._session.commit()
             
-    def update_status(self, pedido_id, status):
-        pedido = self._session.query(PedidoDB).get(pedido_id)
-        if pedido:
-            pedido.status = status
-            self._session.commit()
-
     def delete(self, pedido_id):
         pedido = self._session.query(PedidoDB).get(pedido_id)
         if pedido:
