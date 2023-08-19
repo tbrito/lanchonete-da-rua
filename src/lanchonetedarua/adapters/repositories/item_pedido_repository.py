@@ -27,6 +27,7 @@ class ItemPedidoRepository(ItemPedidoRepositoryChannel):
         item_pedido_db = ItemPedidoMapper.map_entity_to_item_pedido_db(pedido_id, item_pedido)
         self._session.add(item_pedido_db)
         self._session.commit()
+        return ItemPedidoMapper.map_item_pedido_db_to_entity(item_pedido_db)
 
     def update(self, item_pedido_id, item_pedido):
         item_pedido_db = self._session.query(ItemPedidoBD).get(item_pedido_id)

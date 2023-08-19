@@ -27,6 +27,7 @@ class ClienteRepository(ClienteRepositoryChannel):
         cliente_db = ClienteMapper.map_entity_to_cliente_db(cliente)
         self._session.add(cliente_db)
         self._session.commit()
+        return ClienteMapper.map_cliente_db_to_entity(cliente_db)
 
     def update(self, cliente_id, cliente_data):
         cliente = self._session.query(ClienteDB).get(cliente_id)

@@ -1,9 +1,5 @@
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json, LetterCase
 from .entity import Entity
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
 class Produto(Entity):
     nome: str
     descricao: str

@@ -14,3 +14,4 @@ class CheckoutRepository(CheckoutRepositoryChannel):
         checkout_db = CheckoutMapper.map_entity_to_checkout_db(checkout)
         self._session.add(checkout_db)
         self._session.commit()
+        return CheckoutMapper.map_checkout_db_to_entity(checkout_db)

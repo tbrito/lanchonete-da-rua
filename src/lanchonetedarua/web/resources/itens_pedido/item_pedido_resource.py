@@ -15,12 +15,9 @@ class PedidosAdicionarItens(Resource):
     @api.expect(_item_pedido)
     def post(self, pedido_id):
         pedido_service = ContainerDI.get(PedidoService)
-        
-        item_pedido_data = api.payload
-        item_pedido = ItensPedidoInput(**item_pedido_data)
-        pedido_service.adicionar_item_pedido(pedido_id, item_pedido)
-
-        return ResponseHandler.success('item adicionado com sucesso', 201)
+        item_pedido_input = ItensPedidoInput(**api.payload)
+        item_pedido = pedido_service.adicionar_item_pedido(pedido_id, item_pedido_input)
+        return ResponseHandler.success(item_pedido.id, 201)
 
 @api.route('/<string:pedido_id>/itens/<string:item_pedido_id>')
 class PedidosEditarItens(Resource):
