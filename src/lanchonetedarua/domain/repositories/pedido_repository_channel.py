@@ -21,10 +21,10 @@ class PedidoRepositoryChannel(ABC):
         """Atualizar um pedido."""    
         pass
     
-    @abstractmethod
-    def update_status(self, pedido_id, status):
-        """Atualiza status do pedido"""
-        pass
+    # @abstractmethod
+    # def update_status(self, pedido_id, status):
+    #     """Atualiza status do pedido"""
+    #     pass
 
     @abstractmethod
     def delete(self, pedido_id):

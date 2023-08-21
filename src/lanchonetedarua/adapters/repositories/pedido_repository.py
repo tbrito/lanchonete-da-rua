@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.entities.pedido import Pedido
 from adapters.mappings.pedido_map import PedidoDB
-from domain.value_objects.status_pedido import StatusPedido
 
 class PedidoRepository(PedidoRepositoryChannel):
     def __init__(self, database_uri: str):
@@ -29,7 +28,7 @@ class PedidoRepository(PedidoRepositoryChannel):
         pedidos_entity = self._session.query(PedidoDB).all()
         return self._map_pedidos_db_to_entities(pedidos_entity)
 
-    def add(self, pedido):
+    def add(self, pedido: Pedido):
         pedido_db = self._map_entity_to_pedido_db(pedido)
         self._session.add(pedido_db)
         self._session.commit()
@@ -37,10 +36,10 @@ class PedidoRepository(PedidoRepositoryChannel):
     def update(self, pedido_id, pedido_data):
         pedido = self._session.query(PedidoDB).get(pedido_id)
         if pedido:
-            pedido.cliente_id = pedido_data.cliente_id,
-            pedido.session_id = pedido_data.session_id,
-            pedido.observacoes = pedido_data.observacoes,
-            pedido.status = pedido_data.status
+            pedido.cliente_id = pedido_data.cliente_id
+            pedido.session_id = pedido_data.session_id
+            pedido.observacoes = pedido_data.observacoes
+            pedido.status = pedido.status.avancar()
             self._session.commit()
             
     def delete(self, pedido_id):
@@ -73,5 +72,5 @@ class PedidoRepository(PedidoRepositoryChannel):
             cliente_id = entity.cliente_id,
             session_id = entity.session_id,
             observacoes = entity.observacoes,
-            status = entity.status
+            status = entity.status.nome
         )

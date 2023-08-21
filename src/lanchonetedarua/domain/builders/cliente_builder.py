@@ -18,7 +18,7 @@ class ClienteBuilder:
         self.telefone = telefone
         return self
 
-    def build(self):
+    def build(self) -> Cliente:
         if not self.nome:
             raise ValueError("É necessário informar o nome do cliente")
         return Cliente(None, self.nome, self.cpf, self.telefone, None)

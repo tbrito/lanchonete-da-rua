@@ -15,7 +15,13 @@ class ClienteService:
         return self.cliente_repository.get_all()
         
     def criar_cliente(self, cliente_data) -> Cliente:
-        cliente = ClienteBuilder().com_nome(cliente_data.nome).com_cpf(cliente_data.cpf).com_telefone(cliente_data.telefone).build()
+        cliente = (
+            ClienteBuilder()
+            .com_nome(cliente_data.nome)
+            .com_cpf(cliente_data.cpf)
+            .com_telefone(cliente_data.telefone)
+            .build())
+        
         return self.cliente_repository.add(cliente)
 
     def obter_cliente_por_id(self, cliente_id) -> Cliente:
