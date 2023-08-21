@@ -1,15 +1,11 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
+from adapters.database.data_access.session_manager import SessionManager
 from adapters.mappings.cliente_db import ClienteDB
 from adapters.mappings.cliente_mapper import ClienteMapper
 
 class ClienteRepository(ClienteRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def get_by_id(self, cliente_id):
         cliente_db = self._session.query(ClienteDB).get(cliente_id)

@@ -1,14 +1,10 @@
-from sqlalchemy import DateTime, create_engine
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.checkout_repository_channel import CheckoutRepositoryChannel
+from adapters.database.data_access.session_manager import SessionManager
 from adapters.mappings.checkout_mapper import CheckoutMapper
 
 class CheckoutRepository(CheckoutRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def add(self, checkout):
         checkout_db = CheckoutMapper.map_entity_to_checkout_db(checkout)

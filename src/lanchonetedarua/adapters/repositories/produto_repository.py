@@ -1,15 +1,11 @@
-from sqlalchemy import create_engine, null
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.produto_repository_channel import ProdutoRepositoryChannel
+from adapters.database.data_access.session_manager import SessionManager
 from adapters.mappings.produto_mapper import ProdutoMapper
 from adapters.mappings.produto_db import ProdutoDB
 
 class ProdutoRepository(ProdutoRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def get_by_id(self, produto_id):
         produto_db = self._session.query(ProdutoDB).get(produto_id)
