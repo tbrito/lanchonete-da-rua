@@ -2,9 +2,9 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask, Blueprint
-from flask_marshmallow import Marshmallow
 from flask_restx import Api
 
+from adapters.database.data_access.session_manager import SessionManager
 from adapters.repositories.cliente_repository import ClienteRepository
 from adapters.repositories.pedido_repository import PedidoRepository
 from adapters.repositories.categoria_repository import CategoriaRepository
@@ -32,35 +32,37 @@ from container_di import ContainerDI
 
 def configure_inject() -> None:
     database_uri = os.getenv('DATABASE_URI')
-    cliente_repository = ClienteRepository(database_uri)
+    session_manager = SessionManager(database_uri)
+
+    cliente_repository = ClienteRepository(session_manager)
     cliente_service = ClienteService(cliente_repository)
     ContainerDI.register(ClienteService, cliente_service)
     ContainerDI.register(ClienteRepository, cliente_service)
     
-    pedido_repository = PedidoRepository(database_uri)
-    item_pedido_repository = ItemPedidoRepository(database_uri)
+    pedido_repository = PedidoRepository(session_manager)
+    item_pedido_repository = ItemPedidoRepository(session_manager)
     pedido_service = PedidoService(pedido_repository, item_pedido_repository)
     ContainerDI.register(PedidoService, pedido_service)
     ContainerDI.register(PedidoRepository, pedido_service)
     ContainerDI.register(ItemPedidoRepository, pedido_service)
     
-    fila_repository = FilaAtendimentoRepository(database_uri)
+    fila_repository = FilaAtendimentoRepository(session_manager)
     fila_service = FilaAtendimentoService(fila_repository)
     ContainerDI.register(FilaAtendimentoService, fila_service)
     ContainerDI.register(FilaAtendimentoRepository, fila_service)
 
-    checkout_repository = CheckoutRepository(database_uri)
+    checkout_repository = CheckoutRepository(session_manager)
     checkout_service = CheckoutService(checkout_repository, pedido_repository, fila_repository, item_pedido_repository)
     ContainerDI.register(CheckoutService, checkout_service)
     ContainerDI.register(CheckoutRepository, checkout_service)
     ContainerDI.register(FilaAtendimentoRepository, checkout_service)
 
-    produto_repository = ProdutoRepository(database_uri)
+    produto_repository = ProdutoRepository(session_manager)
     produto_service = ProdutoService(produto_repository)
     ContainerDI.register(ProdutoService, produto_service)
     ContainerDI.register(ProdutoRepository, produto_service)
     
-    categoria_repository = CategoriaRepository(database_uri)
+    categoria_repository = CategoriaRepository(session_manager)
     categoria_service = CategoriaService(categoria_repository)
     ContainerDI.register(CategoriaService, categoria_service)
     ContainerDI.register(CategoriaRepository, pedido_service)
@@ -87,7 +89,6 @@ def register_routers(app):
 def create_app():
     load_dotenv()
     app = Flask(__name__)
-    ma = Marshmallow(app)
     configure_inject()
     register_routers(app)
     return app

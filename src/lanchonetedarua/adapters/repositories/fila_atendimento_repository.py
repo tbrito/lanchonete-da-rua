@@ -1,15 +1,11 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from adapters.mappings.fila_atendimento_db import FilaAtendimentoDB
 from domain.repositories.fila_atendimento_repository_channel import FilaAtendimentoRepositoryChannel
+from adapters.database.data_access.session_manager import SessionManager
+from adapters.mappings.fila_atendimento_db import FilaAtendimentoDB
 from adapters.mappings.fila_atendimento_mapper import FilaAtendimentoMapper
 
 class FilaAtendimentoRepository(FilaAtendimentoRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def get_by_id(self, fila_id):
         fila_db = self._session.query(FilaAtendimentoDB).get(fila_id)

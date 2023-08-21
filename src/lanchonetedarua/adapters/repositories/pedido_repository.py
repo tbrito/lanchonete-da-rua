@@ -1,15 +1,11 @@
-from sqlalchemy import create_engine, null
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
+from adapters.database.data_access.session_manager import SessionManager
 from adapters.mappings.pedido_db import PedidoDB
 from adapters.mappings.pedido_mapper import PedidoMapper
 
 class PedidoRepository(PedidoRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def get_by_id(self, pedido_id):     
         pedido_db = self._session.query(PedidoDB).get(pedido_id)

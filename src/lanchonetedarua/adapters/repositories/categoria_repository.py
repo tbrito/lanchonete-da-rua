@@ -1,17 +1,13 @@
-from sqlalchemy import DateTime, create_engine
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.categoria_repository_channel import CategoriaRepositoryChannel
 from domain.entities.categoria import Categoria
+from adapters.database.data_access.session_manager import SessionManager
 from adapters.mappings.categoria_db import CategoriaDB
 from adapters.mappings.categoria_mapper import CategoriaMapper
 
 
 class CategoriaRepository(CategoriaRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def get_by_id(self, categoria_id):
         categoria_db = self._session.query(CategoriaDB).get(categoria_id)
