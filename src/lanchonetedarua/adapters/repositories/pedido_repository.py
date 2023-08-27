@@ -65,7 +65,7 @@ class PedidoRepository(PedidoRepositoryChannel):
             cliente_id = pedido_db.cliente_id,
             session_id = pedido_db.session_id,
             observacoes = pedido_db.observacoes,
-            status = pedido_db.status,
+            status = StatusPedido.get_status_from_database(pedido_db.status),
             created_at=pedido_db.created_at
         )
     

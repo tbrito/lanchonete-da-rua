@@ -1,4 +1,6 @@
 
+
+
 class StatusPedido:
     def avancar(self, pedido):
         pass
@@ -8,6 +10,14 @@ class StatusPedido:
     
     def desistir(self, pedido):
         pass
+    
+    @staticmethod
+    def get_status_from_database(status_string):
+        if status_string in status_mapping:
+            status_instance = status_mapping[status_string]
+            return status_instance
+        else:
+            raise("Unknown status:", status_string)
 
 
 class EmAtendimentoState(StatusPedido):
@@ -70,9 +80,22 @@ class ProntoParaEntregaState(StatusPedido):
 
 class Finalizado(StatusPedido):
     def __init__(self):
-        self.nome = "Entregue"
+        self.nome = "Finalizado"
         
         
 class PedidoAbandonadoState(StatusPedido):
+    def __init__(self):
+        self.nome = "Pedido abandonado"
+    
     def avancar(self, pedido):
         pedido.estato = EmAtendimentoState()
+        
+status_mapping = {
+    "Em Atendimento": EmAtendimentoState(),
+    "Finalizado para pagamento": FinalizadoParaPagamentoState(),
+    "Aguardando preparo": AguardandoPreparoState(),
+    "Em preparação": EmPreparacaoState(),
+    "Pronto para entrega": ProntoParaEntregaState(),
+    "Finalizado": Finalizado(),
+    "Pedido abandonado": PedidoAbandonadoState()
+}
