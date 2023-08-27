@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.entities.pedido import Pedido
 from adapters.mappings.pedido_map import PedidoDB
+from domain.value_objects.status_pedido import Finalizado, StatusPedido
 
 class PedidoRepository(PedidoRepositoryChannel):
     def __init__(self, database_uri: str):
@@ -20,12 +21,15 @@ class PedidoRepository(PedidoRepositoryChannel):
         
         return self._map_pedido_db_to_entity(pedido_db)
 
-    def get_all(self):
+    def obter_pedidos_nao_finalizados(self):
+        
+        status = Finalizado()
         pedidos_entity = self._session.query(PedidoDB).all()
+        
         return self._map_pedidos_db_to_entities(pedidos_entity)
     
     def get_all_by_cliente_id(self, cliente_id):
-        pedidos_entity = self._session.query(PedidoDB).all()
+        pedidos_entity = self._session.query(PedidoDB).filter(PedidoDB.cliente_id != cliente_id).all()
         return self._map_pedidos_db_to_entities(pedidos_entity)
 
     def add(self, pedido: Pedido):

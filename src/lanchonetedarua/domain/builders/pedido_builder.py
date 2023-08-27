@@ -1,5 +1,6 @@
 
 from domain.entities.pedido import Pedido
+from domain.value_objects.status_pedido import EmAtendimentoState
 
 class PedidoBuilder:
     def __init__(self):
@@ -24,4 +25,4 @@ class PedidoBuilder:
             raise ValueError("Não se pode iniciar um pedido sem cliente associado")
         if not self.session_id:
             raise ValueError("Não se pode iniciar um pedido sem uma sessão associada")
-        return Pedido(None, self.cliente_id, self.session_id, self.observacoes, None)
+        return Pedido(None, self.cliente_id, self.session_id, self.observacoes, EmAtendimentoState(), None)

@@ -3,17 +3,17 @@ from abc import ABC, abstractmethod
 class PedidoRepositoryChannel(ABC):
     @abstractmethod
     def get_by_id(self, pedido_id):
-        """Obter usuario pelo id."""
+        """Obter pedido pelo id."""
         pass
 
     @abstractmethod
-    def get_all(self):
-        """Obter todos os usuário."""
+    def obter_pedidos_nao_finalizados(self):
+        """Obter todos os pedido."""
         pass
 
     @abstractmethod
     def add(self, pedido):
-        """Cadastrar novo usuário."""
+        """Cadastrar novo pedido."""
         pass
 
     @abstractmethod
@@ -28,5 +28,5 @@ class PedidoRepositoryChannel(ABC):
 
     @abstractmethod
     def delete(self, pedido_id):
-        """Excluir um usuário.""" 
+        """Excluir um pedido.""" 
         pass   

@@ -62,13 +62,13 @@ class ProntoParaEntregaState(StatusPedido):
         self.nome = "Pronto para entrega"
     
     def avancar(self, pedido):
-        pedido.status = EntregueState()
+        pedido.status = Finalizado()
     
     def retroceder(self, pedido):
         pedido.status = EmPreparacaoState()
 
 
-class EntregueState(StatusPedido):
+class Finalizado(StatusPedido):
     def __init__(self):
         self.nome = "Entregue"
         

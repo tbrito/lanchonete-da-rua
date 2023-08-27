@@ -1,7 +1,6 @@
 
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.repositories.item_pedido_repository_channel import ItemPedidoRepositoryChannel
-from domain.value_objects.status_pedido import StatusPedido
 from domain.builders.pedido_builder import PedidoBuilder
 from web.resources.pedidos.pedido_input import PedidoInput
 
@@ -14,8 +13,8 @@ class PedidoService:
         self.pedido_repository  = pedido_repository
         self.item_pedido_repository  = item_pedido_repository
  
-    def obter_pedidos(self):
-        return self.pedido_repository.get_all()
+    def obter_pedidos_nao_finalizados(self):
+        return self.pedido_repository.obter_pedidos_nao_finalizados()
         
     def criar_pedido(self, pedido_data: PedidoInput):
         pedido_entity = ( 
