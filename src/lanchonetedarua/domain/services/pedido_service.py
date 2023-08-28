@@ -41,13 +41,13 @@ class PedidoService:
         self.pedido_repository.delete(pedido_id)
 
     def adicionar_item_pedido(self, pedido_id, _item_pedido):
-        self.item_pedido_repository.add(pedido_id, _item_pedido)
+        return self.item_pedido_repository.add(pedido_id, _item_pedido)
 
     def editar_item_pedido(self, pedido_id, item_pedido_id, _item_pedido):
         self.item_pedido_repository.update(pedido_id, item_pedido_id, _item_pedido)
 
     def obter_item_pedido_por_id(self, item_pedido_id):
-        self.item_pedido_repository.get_by_id(self, item_pedido_id)
+        self.item_pedido_repository.get_by_id(item_pedido_id)
 
     def deletar_item_pedido(self, item_pedido_id):
        self.item_pedido_repository.delete(item_pedido_id)

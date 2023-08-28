@@ -3,6 +3,7 @@ from container_di import ContainerDI
 from domain.services.produto_service import ProdutoService
 from domain.services.categoria_service import CategoriaService
 from web.resources.produtos.produto_input import ProdutoInput
+from web.resources.produtos.produto_dto import ProdutoDTO
 from web.response_handle.response_handler import ResponseHandler
 
 api = ProdutoInput.api
@@ -18,7 +19,8 @@ class Produtos(Resource):
          if produto:
              ResponseHandler.error('Produto não encontrado',404)
          
-         return ResponseHandler.success(produto, status_code=200)
+         produto_dto = ProdutoDTO(produto)
+         return ResponseHandler.success(produto_dto)
 
     @api.doc('atualiza um produto por id')
     @api.expect(_produto, validate=True)
@@ -45,7 +47,7 @@ class Produtos(Resource):
             return ResponseHandler.error('Produto não existe', 400)
         
         produto_service.deletar_produto(produto_id)
-        return ResponseHandler.success(produto, 'produto deletado com sucesso', 201)
+        return ResponseHandler.success('Produto deletado com sucesso')
     
 @api.route('/categoria/<int:categoria_id>')
 class ProdutosByCategoria(Resource):
@@ -58,7 +60,8 @@ class ProdutosByCategoria(Resource):
          if produtos is None:
              return ResponseHandler.error('Categoria não cadastrado', 404)
          
-         return ResponseHandler.success(produtos)
+         produtos_dto = ProdutoDTO.from_entity_list(produtos)
+         return ResponseHandler.success(produtos_dto)
 
 @api.route('/')
 class ProdutosNoParameters(Resource):
@@ -66,20 +69,20 @@ class ProdutosNoParameters(Resource):
     def get(self):
         produto_service = ContainerDI.get(ProdutoService)
         produtos = produto_service.obter_produtos()
-        
-        return ResponseHandler.success(produtos, status_code=200)
+        produtos_dto = ProdutoDTO.from_entity_list(produtos)
+        return ResponseHandler.success(produtos_dto)
 
     @api.expect(_produto, validate=True)
     def post(self):
         produto_service = ContainerDI.get(ProdutoService)
-        produto_data = api.payload
-        produto = ProdutoInput(**produto_data)
+        produto_input = ProdutoInput(**api.payload)
         
         categoria_service = ContainerDI.get(CategoriaService)
-        categoria = categoria_service.obter_categoria_por_id(produto.categoria_id) 
+        categoria = categoria_service.obter_categoria_por_id(produto_input.categoria_id) 
         
         if categoria is None:
             ResponseHandler.error('Categoria não cadastrada')
 
-        produto_service.criar_produto(produto)
-        return ResponseHandler.success('produto criado com sucesso', status_code=201)
+        produto = produto_service.criar_produto(produto_input)
+        produto_dto = ProdutoDTO(produto)
+        return ResponseHandler.success(produto_dto, status_code=201)

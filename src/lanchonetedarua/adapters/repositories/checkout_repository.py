@@ -1,28 +1,13 @@
-from sqlalchemy import DateTime, create_engine
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.checkout_repository_channel import CheckoutRepositoryChannel
-from adapters.mappings.checkout_map import CheckoutDB
+from adapters.database.data_access.session_manager import SessionManager
+from adapters.mappings.checkout_mapper import CheckoutMapper
 
 class CheckoutRepository(CheckoutRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def add(self, checkout):
-        checkout_db = self._map_entity_to_checkout_db(checkout)
+        checkout_db = CheckoutMapper.map_entity_to_checkout_db(checkout)
         self._session.add(checkout_db)
         self._session.commit()
-
-
-    # mover os métodos de conversão abaixo para uma classe de conversão
-
-    def _map_entity_to_checkout_db(self, entity):
-        if entity is None:
-            return None
-        return CheckoutDB(
-            pedido_id=entity.pedido_id,
-            valor_total=entity.valor_total,
-            data_pagamento=entity.data_pagamento
-        )
+        return CheckoutMapper.map_checkout_db_to_entity(checkout_db)

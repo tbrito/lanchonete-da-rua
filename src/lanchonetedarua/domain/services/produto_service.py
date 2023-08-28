@@ -10,7 +10,7 @@ class ProdutoService:
         return self.produto_repository.get_all()
         
     def criar_produto(self, produto_data):
-        self.produto_repository.add(produto_data)
+        return self.produto_repository.add(produto_data)
 
     def obter_produto_por_id(self, produto_id):
         return self.produto_repository.get_by_id(produto_id)

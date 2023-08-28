@@ -1,16 +1,11 @@
-from sqlalchemy import create_engine, null
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.entities.pedido import Pedido
 from adapters.mappings.pedido_map import PedidoDB
 from domain.value_objects.status_pedido import Finalizado
 
 class PedidoRepository(PedidoRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def get_by_id(self, pedido_id) -> Pedido:
         
@@ -34,6 +29,7 @@ class PedidoRepository(PedidoRepositoryChannel):
         pedido_db = PedidoDB.map_from_entity(pedido)
         self._session.add(pedido_db)
         self._session.commit()
+        return PedidoMapper.map_pedido_db_to_entity(pedido_db)
 
     def update(self, pedido_id: int, pedido: Pedido):
         pedido_db = self._session.query(PedidoDB).get(pedido_id)

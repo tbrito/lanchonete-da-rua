@@ -1,12 +1,6 @@
-from dataclasses import dataclass
 from datetime import datetime
-
-from dataclasses_json import dataclass_json, LetterCase
-
 from .entity import Entity
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
 class Checkout(Entity):
     pedido_id: int
     valor_total: float

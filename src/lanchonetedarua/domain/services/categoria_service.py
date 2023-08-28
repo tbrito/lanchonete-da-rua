@@ -9,7 +9,7 @@ class CategoriaService:
         return self.categoria_repository.get_all()
         
     def criar_categoria(self, categoria_data):
-        self.categoria_repository.add(categoria_data)
+        return self.categoria_repository.add(categoria_data)
 
     def obter_categoria_por_id(self, categoria_id):
         return self.categoria_repository.get_by_id(categoria_id)

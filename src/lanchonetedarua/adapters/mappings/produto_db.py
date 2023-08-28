@@ -2,10 +2,8 @@ import datetime
 
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy.dialects.postgresql import JSON
 
-from adapters.mappings.categoria_map import CategoriaDB
-from .cliente_map import ClienteDB
+from adapters.mappings.categoria_db import CategoriaDB
 
 Base = declarative_base()
 

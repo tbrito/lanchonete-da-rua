@@ -1,33 +1,29 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
 from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
-from domain.entities.cliente import Cliente
-from adapters.mappings.cliente_map import ClienteDB
+from adapters.database.data_access.session_manager import SessionManager
+from adapters.mappings.cliente_db import ClienteDB
+from adapters.mappings.cliente_mapper import ClienteMapper
 
 class ClienteRepository(ClienteRepositoryChannel):
-    def __init__(self, database_uri: str):
-        engine = create_engine(database_uri)
-        Session = sessionmaker(engine)
-        self._session = Session()
+    def __init__(self, session_manager: SessionManager):
+        self._session = session_manager.session
 
     def get_by_id(self, cliente_id):
         cliente_db = self._session.query(ClienteDB).get(cliente_id)
-        return self._map_cliente_db_to_entity(cliente_db)
+        return ClienteMapper.map_cliente_db_to_entity(cliente_db)
 
     def get_all(self):
-        clientes_entity = self._session.query(ClienteDB).all()
-        return self._map_clientes_db_to_entities(clientes_entity)
+        clientes_db = self._session.query(ClienteDB).all()
+        return ClienteMapper.map_clientes_db_to_entities(clientes_db)
 
     def get_by_cpf(self, cliente_cpf):
         cliente_db = self._session.query(ClienteDB).filter_by(cpf=cliente_cpf).first()
-        return self._map_cliente_db_to_entity(cliente_db)
+        return ClienteMapper.map_cliente_db_to_entity(cliente_db)
 
     def add(self, cliente):
-
-        cliente_db = self._map_entity_to_cliente_db(cliente)
+        cliente_db = ClienteMapper.map_entity_to_cliente_db(cliente)
         self._session.add(cliente_db)
         self._session.commit()
+        return ClienteMapper.map_cliente_db_to_entity(cliente_db)
 
         return cliente_db
 
@@ -45,30 +41,3 @@ class ClienteRepository(ClienteRepositoryChannel):
         if cliente:
             self._session.delete(cliente)
             self._session.commit()
-
-    # mover os métodos de conversão abaixo para uma classe de conversão
-
-    def _map_clientes_db_to_entities(self, clientes_entity):
-        return [self._map_cliente_db_to_entity(cliente_db) for cliente_db in clientes_entity]
-
-    def _map_cliente_db_to_entity(self, cliente_db):
-        if cliente_db is None:
-            return None
-
-        return Cliente(
-            id=cliente_db.id,
-            nome=cliente_db.nome,
-            cpf= cliente_db.cpf,
-            telefone=cliente_db.telefone,
-            created_at=cliente_db.created_at
-        )
-    
-    def _map_entity_to_cliente_db(self, entity):
-        if entity is None:
-            return None
-
-        return ClienteDB(
-            nome=entity.nome,
-            cpf=entity.cpf.valor,
-            telefone=entity.telefone
-        )

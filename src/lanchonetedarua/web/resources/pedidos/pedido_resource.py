@@ -5,6 +5,7 @@ from web.response_handle.response_handler import ResponseHandler
 
 from domain.services.pedido_service import PedidoService
 from web.resources.pedidos.pedido_input import PedidoInput
+from web.resources.pedidos.pedido_dto import PedidoDTO
 
 from container_di import ContainerDI
 
