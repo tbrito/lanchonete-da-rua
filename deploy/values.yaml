@@ -1,0 +1,11 @@
+appName: "lanchonetedarua"
+appImage: "lanche:latest"
+appReplicas: 2
+
+dbImage: "postgres:15-alpine"
+
+secrets:
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+  POSTGRES_DB: "lanchonetedarua"
+  DATABASE_URI: "postgresql://postgres:postgres@db:5432/lanchonetedarua"

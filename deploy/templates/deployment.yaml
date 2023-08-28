@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-deployment
+  namespace: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.appReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      initContainers:
+      - name: migration-init
+        image: {{ .Values.appImage }}
+        command: ["sh", "-c", "migration-script-here"]
+      containers:
+      - name: {{ .Values.appName }}-container
+        image: {{ .Values.appImage }}
+        envFrom:
+        - secretRef:
+            name: {{ .Values.appName }}-secret
