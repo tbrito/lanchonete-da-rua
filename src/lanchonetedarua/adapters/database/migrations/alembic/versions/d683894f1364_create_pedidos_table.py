@@ -10,15 +10,6 @@ import sqlalchemy as sa
 from enum import Enum
 import datetime
 
-
-class StatusPedido(Enum):
-    EM_ATENDIMENTO = "Em atendimento"
-    FINALIZADO_PARA_PAGAMENTO = "Pedido finalizado aguardando pagamento"
-    AGUARDANDO_PREPARO = "Pedido pago aguardando início do preparo"
-    EM_PREPARACAO = "Em preparação"
-    PRONTO_PARA_ENTREGA = "Pronto para entrega"
-    ENTREGUE = "Entregue"
-
 # revision identifiers, used by Alembic.
 revision = 'd683894f1364'
 down_revision = '7f7f5ee74d36'
@@ -33,7 +24,7 @@ def upgrade() -> None:
         sa.Column('cliente_id', sa.Integer, sa.ForeignKey("cliente.id"), nullable=True),
         sa.Column('session_id', sa.String, nullable=False),
         sa.Column('observacoes', sa.String(100)),
-        sa.Column('status', sa.Enum(StatusPedido)),
+        sa.Column('status', sa.String(30)),
         sa.Column('created_at', sa.DateTime, default=datetime.datetime.now()),
     )
 
