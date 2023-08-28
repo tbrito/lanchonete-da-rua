@@ -2,7 +2,6 @@ import datetime
 
 from domain.repositories.checkout_repository_channel import CheckoutRepositoryChannel
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
-from domain.value_objects.status_pedido import StatusPedido
 from domain.entities.checkout import Checkout
 from domain.entities.fila_atendimento import FilaAtendimento
 from domain.repositories.fila_atendimento_repository_channel import FilaAtendimentoRepositoryChannel
@@ -33,8 +32,9 @@ class CheckoutService:
         )
         self.checkout_repository.add(checkout)
         pedido = self.pedido_repository.get_by_id(pedido_id)
-        pedido.status.avancar()
-        self.pedido_repository.update(pedido)
+        pedido.status.avancar(pedido)
+        
+        self.pedido_repository.update(pedido_id, pedido)
 
         fila = FilaAtendimento(
             id=0,

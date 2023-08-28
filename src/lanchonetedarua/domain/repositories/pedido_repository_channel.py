@@ -1,13 +1,16 @@
 from abc import ABC, abstractmethod
 
+from domain.entities.pedido import Pedido
+
+
 class PedidoRepositoryChannel(ABC):
     @abstractmethod
-    def get_by_id(self, pedido_id):
+    def get_by_id(self, pedido_id: int) -> Pedido:
         """Obter pedido pelo id."""
         pass
 
     @abstractmethod
-    def obter_pedidos_nao_finalizados(self):
+    def obter_pedidos_nao_finalizados(self) -> list[Pedido]:
         """Obter todos os pedido."""
         pass
 
@@ -17,7 +20,7 @@ class PedidoRepositoryChannel(ABC):
         pass
 
     @abstractmethod
-    def update(self, pedido_id, pedido):
+    def update(self, pedido_id: int, pedido):
         """Atualizar um pedido."""    
         pass
     
@@ -27,6 +30,6 @@ class PedidoRepositoryChannel(ABC):
     #     pass
 
     @abstractmethod
-    def delete(self, pedido_id):
+    def delete(self, pedido_id: int):
         """Excluir um pedido.""" 
         pass   

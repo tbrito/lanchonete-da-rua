@@ -21,8 +21,7 @@ class PedidoBuilder:
         return self
     
     def build(self)  -> Pedido:
-        if not self.cliente_id:
-            raise ValueError("Não se pode iniciar um pedido sem cliente associado")
-        if not self.session_id:
-            raise ValueError("Não se pode iniciar um pedido sem uma sessão associada")
+        if not self.cliente_id and not self.session_id:
+            raise ValueError("Não se pode iniciar um pedido sem cliente associado ou uma uma sessão associada")
+
         return Pedido(None, self.cliente_id, self.session_id, self.observacoes, EmAtendimentoState(), None)

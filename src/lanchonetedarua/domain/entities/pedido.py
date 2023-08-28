@@ -13,18 +13,18 @@ class Pedido(Entity):
         self.observacoes = observacoes
         self.status = status
 
-    def avancar(self):
+    def avancar_status(self):
         self.status.avancar(self)
     
-    def retroceder(self):
+    def retroceder_status(self):
         self.status.retroceder(self)
     
     def mostrar_estado(self):
         print(f"Estado atual: {self.status.nome}")
         
     def desistir(self):
-        if isinstance(self.estado, EmAtendimentoState) or isinstance(self.estado, FinalizadoParaPagamentoState):
-            self.estado = PedidoAbandonadoState()
+        if isinstance(self.status, EmAtendimentoState) or isinstance(self.status, FinalizadoParaPagamentoState):
+            self.status = PedidoAbandonadoState()
             print("Pedido abandonado.")
         else:
             print("Não é possível desistir neste estado.")
