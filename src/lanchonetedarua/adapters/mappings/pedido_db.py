@@ -5,12 +5,11 @@ from sqlalchemy.orm import declarative_base, relationship
 
 from domain.value_objects.status_pedido import StatusPedido
 from domain.entities.pedido import Pedido
-from .cliente_map import ClienteDB
+from .cliente_mapper import ClienteDB
 
 Base = declarative_base()
 
 class PedidoDB(Base):
-    # __allow_unmapped__ = True
     __tablename__ = 'pedido'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
