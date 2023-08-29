@@ -9,7 +9,6 @@ class PedidoRepository(PedidoRepositoryChannel):
         self._session = session_manager.session
 
     def get_by_id(self, pedido_id) -> Pedido:
-        
         pedido_db = self._session.query(PedidoDB).get(pedido_id)
         
         if pedido_db is None:

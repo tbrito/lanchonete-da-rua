@@ -1,11 +1,10 @@
 from flask_restx import Resource
-from domain.value_objects.status_pedido import EmAtendimentoState
+from domain.value_objects.status_pedido import EmAtendimentoState, EmPreparacaoState, ProntoParaEntregaState
 from web.resources.pedidos.output.pedido_output import pedidos_output, pedido_output
 from web.response_handle.response_handler import ResponseHandler
 
 from domain.services.pedido_service import PedidoService
 from web.resources.pedidos.pedido_input import PedidoInput
-from web.resources.pedidos.pedido_dto import PedidoDTO
 
 from container_di import ContainerDI
 
@@ -24,8 +23,10 @@ class Pedidos(Resource):
          
         if pedido is None:
             return ResponseHandler.error('Pedido não encontrado',404)
+        
+        pedido_encontrado = pedido_output.dump(pedido)
          
-        return ResponseHandler.success(pedido, status_code=200)
+        return ResponseHandler.success(pedido_encontrado, status_code=200)
     
     
 @api.route('/<int:pedido_id>/encaminhar-para-pagamento')
@@ -43,6 +44,58 @@ class PedidoParaPagamento(Resource):
             return ResponseHandler.error('Pedido não encontrado',404)
         
         if not isinstance(pedido.status, EmAtendimentoState):
+            return ResponseHandler.error(f'Não é possível enviar pedidos com o status {pedido.status.nome} para pagamento')
+        
+        pedido.avancar_status()
+        pedido_atualizado = pedido_service.atualizar_pedido(pedido_id, pedido)
+        
+        if pedido_atualizado is None:
+            return ResponseHandler.error("Erro ao atualizar o pedido")
+         
+        pedido_atualizado_output = pedido_output.dump(pedido_atualizado)
+        return ResponseHandler.success(data=pedido_atualizado_output, status_code=201)
+
+@api.route('/<int:pedido_id>/encaminhar-para-entrega')
+@api.doc(params={'pedido_id': 'Id do Pedido'})
+class PedidoParaPagamento(Resource):
+    @api.doc('Encaminhar para entrega ao cliente')
+    @api.response(404, "Pedido não encontrado")
+    @api.response(400, "Erro ao encaminhar pedido")
+    @api.response(200, "Sucesso")
+    def patch(self, pedido_id):
+        pedido_service = ContainerDI.get(PedidoService)
+        pedido = pedido_service.obter_pedido_por_id(pedido_id)
+        
+        if pedido is None:
+            return ResponseHandler.error('Pedido não encontrado',404)
+        
+        if not isinstance(pedido.status, EmPreparacaoState):
+            return ResponseHandler.error(f'Não é possível enviar pedidos com o status {pedido.status.nome} para pagamento')
+             
+        pedido.avancar_status()
+        pedido_atualizado = pedido_service.atualizar_pedido(pedido_id, pedido)
+        
+        if pedido_atualizado is None:
+            return ResponseHandler.error("Erro ao atualizar o pedido")
+         
+        pedido_atualizado_output = pedido_output.dump(pedido_atualizado)
+        return ResponseHandler.success(data=pedido_atualizado_output, status_code=201)
+    
+@api.route('/<int:pedido_id>/finalizar-pedido')
+@api.doc(params={'pedido_id': 'Id do Pedido'})
+class PedidoParaPagamento(Resource):
+    @api.doc('Finalizar pedido já entregue')
+    @api.response(404, "Pedido não encontrado")
+    @api.response(400, "Erro ao encaminhar pedido")
+    @api.response(200, "Sucesso")
+    def patch(self, pedido_id):
+        pedido_service = ContainerDI.get(PedidoService)
+        pedido = pedido_service.obter_pedido_por_id(pedido_id)
+        
+        if pedido is None:
+            return ResponseHandler.error('Pedido não encontrado',404)
+        
+        if not isinstance(pedido.status, ProntoParaEntregaState):
             return ResponseHandler.error(f'Não é possível enviar pedidos com o status {pedido.status.nome} para pagamento')
              
         pedido.avancar_status()
