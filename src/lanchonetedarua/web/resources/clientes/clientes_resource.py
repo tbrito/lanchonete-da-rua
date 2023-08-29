@@ -16,7 +16,12 @@ class Clientes(Resource):
          cliente_service = ContainerDI.get(ClienteService)
          cliente = cliente_service.obter_cliente_por_id(cliente_id)
          cliente_dto = ClienteDTO(cliente)
+         #caso o cliente não exista, retorna um erro
+         if cliente is None:
+            return ResponseHandler.error('Cliente não existe', 404)
+
          return ResponseHandler.success(cliente_dto)
+
      
     @api.doc('atualiza um cliente por id')
     @api.expect(_cliente, validate=True)
@@ -26,7 +31,7 @@ class Clientes(Resource):
         dados_cliente = cliente_service.obter_cliente_por_id(cliente_id)
         
         if dados_cliente is None:
-            return ResponseHandler.error('CLiente não existe')
+            return ResponseHandler.error('Cliente não existe')
         
         cliente_data = api.payload
         cliente = ClienteInput(**cliente_data)
