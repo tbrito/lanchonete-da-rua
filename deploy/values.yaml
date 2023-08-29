@@ -1,11 +1,19 @@
-appName: "lanchonetedarua"
-appImage: "lanche:latest"
-appReplicas: 2
+replicaCount: 2
 
-dbImage: "postgres:15-alpine"
+name: lanchonete-de-rua
 
-secrets:
-  POSTGRES_USER: "postgres"
-  POSTGRES_PASSWORD: "postgres"
-  POSTGRES_DB: "lanchonetedarua"
-  DATABASE_URI: "postgresql://postgres:postgres@db:5432/lanchonetedarua"
+image:
+  repository: lanchonete-de-rua
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 5000
+
+secret:
+  my_secret: "Zm9vYmFy" # Isso é "foobar" em base64
+
+postgresql:
+  postgresqlUsername: "postgres"
+  postgresqlPassword: "postgres"
+  postgresqlDatabase: "lanchonetedarua"

@@ -1,25 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.appName }}-deployment
-  namespace: {{ .Values.appName }}
+  name: {{ .Values.name }}-deployment
 spec:
-  replicas: {{ .Values.appReplicas }}
-  selector:
+  replicas: {{ .Values.replicaCount }}
+  selector:   
     matchLabels:
-      app: {{ .Values.appName }}
+      app: {{ .Values.name }}
   template:
     metadata:
-      labels:
-        app: {{ .Values.appName }}
+      labels:   
+        app: {{ .Values.name }}
     spec:
-      initContainers:
-      - name: migration-init
-        image: {{ .Values.appImage }}
-        command: ["sh", "-c", "migration-script-here"]
       containers:
-      - name: {{ .Values.appName }}-container
-        image: {{ .Values.appImage }}
-        envFrom:
-        - secretRef:
-            name: {{ .Values.appName }}-secret
+      - name: {{ .Values.name }}-container
+        image: "{{ .Values.image.repository }}"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
+        env:
+        - name: POSTGRES_USER
+          value: "{{ .Values.postgresql.postgresqlUsername }}"
+        - name: POSTGRES_PASSWORD
+          value: "{{ .Values.postgresql.postgresqlPassword }}"
+        - name: POSTGRES_DB
+          value: "{{ .Values.postgresql.postgresqlDatabase }}"
+        - name: DATABASE_URI
+          value: "postgresql://postgres:postgres@teste-postgresq.default.svc.cluster.local:5432/lanchonetedarua"
