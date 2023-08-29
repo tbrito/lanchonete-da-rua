@@ -22,9 +22,9 @@ http://localhost:5000/
 ### Rodando em k8s
 
 **Pré requisitos**
-    - minikube instalado, caso não tenha só baixar uilizando esse [link](https://minikube.sigs.k8s.io/docs/start/)
-    - helm instalado, caso não tenha só baixar uilizando esse [link](https://helm.sh/docs/intro/install/)
-    - docker instalado, caso não tenha só baixar uilizando esse [link](https://docs.docker.com/engine/install/)
+- minikube instalado, caso não tenha só baixar uilizando esse [link](https://minikube.sigs.k8s.io/docs/start/)
+- helm instalado, caso não tenha só baixar uilizando esse [link](https://helm.sh/docs/intro/install/)
+- docker instalado, caso não tenha só baixar uilizando esse [link](https://docs.docker.com/engine/install/)
     
 O Primeiro passo vai ser inicializar o seu ambiente kubernetes, com esse comando:
 ```shell
@@ -43,7 +43,7 @@ Caso você queira validar o que está sendo criado e quais yamls estão sendo ge
 ```
 helm template lanchonete-de-rua .
 ```
-E para finalizar a criação dos nossos pods pode instalar o chart no seu amebiente
+E para finalizar a criação dos nossos pods pode instalar o chart no seu ambiente
 ```
 helm install lanchonete-de-rua .
 ```
