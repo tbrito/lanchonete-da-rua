@@ -14,6 +14,12 @@ class Checkout(Resource):
     @api.doc('Checkout de pedidos')
     def post(self, pedido_id):
         checkout_service = ContainerDI.get(CheckoutService)
+        
         checkout = checkout_service.criar_checkout_para_pedido(pedido_id)
+        
+        if(isinstance(checkout, str)):
+            return ResponseHandler.error(checkout, 400)
+        
         checkkout_dto = CheckoutDTO(checkout)
-        return ResponseHandler.success(checkkout_dto, 201)
+        
+        return ResponseHandler.success(data=checkkout_dto, status_code=201)
