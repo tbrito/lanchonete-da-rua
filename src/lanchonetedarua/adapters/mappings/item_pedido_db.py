@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Float, ForeignKey, Integer
-from sqlalchemy.orm import Mapped, declarative_base, relationship, mapped_column
+from sqlalchemy.orm import declarative_base, relationship
 
 from adapters.mappings.produto_db import ProdutoDB
 from adapters.mappings.pedido_db import PedidoDB
@@ -7,7 +7,6 @@ from adapters.mappings.pedido_db import PedidoDB
 Base = declarative_base()
 
 class ItemPedidoBD(Base):
-    # __allow_unmapped__ = True
     __tablename__ = 'item_pedido'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -18,6 +17,9 @@ class ItemPedidoBD(Base):
     
     valor = Column(Float)
     quantidade = Column(Integer)
+    
+
+    
 
     
     

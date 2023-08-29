@@ -1,6 +1,6 @@
 from flask_restx import Resource
 from domain.value_objects.status_pedido import EmAtendimentoState, EmPreparacaoState, ProntoParaEntregaState
-from web.resources.pedidos.output.pedido_output import pedidos_output, pedido_output
+from web.resources.pedidos.pedido_output import pedidos_output, pedido_output
 from web.response_handle.response_handler import ResponseHandler
 
 from domain.services.pedido_service import PedidoService

@@ -29,7 +29,7 @@ class PedidoService:
         self.pedido_repository.add(pedido_entity)
 
     def obter_pedido_por_id(self, pedido_id) -> Pedido:
-        return self.pedido_repository.get_by_id(pedido_id) 
+        return self.pedido_repository.get_by_id(pedido_id)
     
     def atualizar_pedido(self, pedido_id: int, pedido_data: Pedido):
         return self.pedido_repository.update(pedido_id, pedido_data)
