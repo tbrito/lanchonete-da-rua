@@ -1,1 +1,7 @@
-Generic single-database configuration.
+# para criar novos migrates
+
+cd src\lanchonetedarua\adapters\database\migrations
+
+alembic revision -m "create account table"
+
+alembic upgrade head

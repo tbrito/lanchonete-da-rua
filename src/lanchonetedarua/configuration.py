@@ -1,18 +1,30 @@
 import os
 
-import inject
-from flask import Flask
+class Config(object):
+    DEBUG = True
+    TESTING = False
+    
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
 
-from adapters.database.postgres import PostgresAdapter
-from domain.database_interface import DatabaseInterface
+    # Silence the deprecation warning
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-def configure_application(application: Flask) -> None:
-    application.config.update(
-        DATABASE_URI=os.getenv('DATABASE_URI')
-    )
+    # API settings
+    API_PAGINATION_PER_PAGE = 10
 
-def configure_inject(application: Flask) -> None:
-    def config(binder: inject.Binder) -> None:
-        binder.bind(DatabaseInterface, PostgresAdapter(application.config['DATABASE_URI']))
 
-    inject.configure(config)
+class DevelopmentConfig(Config):
+    DEBUG = True
+
+
+class TestConfig(Config):
+    TESTING = True
+
+
+class ProductionConfig(Config):
+    # production config
+    pass
+
+
+def get_config(env=None):
+    return DevelopmentConfig()

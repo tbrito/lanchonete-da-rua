@@ -1,25 +1,37 @@
+from typing import List
+
+from domain.repositories.cliente_repository_channel import ClienteRepositoryChannel
+from domain.builders.cliente_builder import ClienteBuilder
+
 from domain.entities.cliente import Cliente
+
 
 class ClienteService:
 
-    def obter_clientes():
-        # Lógica para obter clientes do domínio. Mock:
-        clientes = [Cliente(1, "Joao", "12345678901", "1234567890"),
-                    Cliente(2, "Maria", "98765432109", "0987654321")]
-        return clientes
+    def __init__(self, cliente_repository: ClienteRepositoryChannel) -> None:
+        self.cliente_repository  = cliente_repository
+ 
+    def obter_clientes(self) -> List[Cliente]:
+        return self.cliente_repository.get_all()
+        
+    def criar_cliente(self, cliente_data) -> Cliente:
+        cliente = (
+            ClienteBuilder()
+            .com_nome(cliente_data.nome)
+            .com_cpf(cliente_data.cpf)
+            .com_telefone(cliente_data.telefone)
+            .build())
+        
+        return self.cliente_repository.add(cliente)
 
-    def criar_cliente(cliente_data):
-        # Lógica para persistir o cliente no domínio
-        ...
+    def obter_cliente_por_id(self, cliente_id) -> Cliente:
+        return self.cliente_repository.get_by_id(cliente_id)
 
-    def obter_cliente_por_id(cliente_id):
-        # Lógica para obter um cliente pelo ID do domínio
-        ...
+    def obter_cliente_por_cpf(self, cliente_cpf) -> Cliente:
+        return self.cliente_repository.get_by_cpf(cliente_cpf)
+    
+    def atualizar_cliente(self, cliente_id, cliente_data) -> Cliente:
+        return self.cliente_repository.update(cliente_id, cliente_data)
 
-    def atualizar_cliente(cliente_id, cliente_data):
-        # Lógica para atualizar um cliente no domínio
-        ...
-
-    def deletar_cliente(cliente_id):
-        # Lógica para deletar um cliente do domínio
-        ...
+    def deletar_cliente(self, cliente_id):
+        self.cliente_repository.delete(cliente_id)
