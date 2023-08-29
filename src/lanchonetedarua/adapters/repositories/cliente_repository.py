@@ -25,6 +25,8 @@ class ClienteRepository(ClienteRepositoryChannel):
         self._session.commit()
         return ClienteMapper.map_cliente_db_to_entity(cliente_db)
 
+        return cliente_db
+
     def update(self, cliente_id, cliente_data):
         cliente = self._session.query(ClienteDB).get(cliente_id)
         if cliente:
@@ -32,6 +34,7 @@ class ClienteRepository(ClienteRepositoryChannel):
             cliente.cpf = cliente_data.cpf
             cliente.telefone = cliente_data.telefone
             self._session.commit()
+            return cliente
 
     def delete(self, cliente_id):
         cliente = self._session.query(ClienteDB).get(cliente_id)
