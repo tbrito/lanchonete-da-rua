@@ -14,6 +14,6 @@ secret:
   my_secret: "Zm9vYmFy" # Isso é "foobar" em base64
 
 postgresql:
-  postgresqlUsername: "postgres"
-  postgresqlPassword: "postgres"
-  postgresqlDatabase: "lanchonetedarua"
+  postgresqlUsername: ${{ secrets.postgresqlUsername }}
+  postgresqlPassword: ${{ secrets.postgresqlPassword }}
+  postgresqlDatabase: ${{ secrets.postgresqlDatabase }}
