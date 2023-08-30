@@ -1,0 +1,19 @@
+replicaCount: 2
+
+name: lanchonete-de-rua
+
+image:
+  repository: lanchonete-de-rua
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 5000
+
+secret:
+  my_secret: "Zm9vYmFy" # Isso é "foobar" em base64
+
+postgresql:
+  postgresqlUsername: "postgres"
+  postgresqlPassword: "postgres"
+  postgresqlDatabase: "lanchonetedarua"

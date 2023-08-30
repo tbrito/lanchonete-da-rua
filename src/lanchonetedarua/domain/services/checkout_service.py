@@ -6,6 +6,7 @@ from domain.entities.checkout import Checkout
 from domain.entities.fila_atendimento import FilaAtendimento
 from domain.repositories.fila_atendimento_repository_channel import FilaAtendimentoRepositoryChannel
 from domain.repositories.item_pedido_repository_channel import ItemPedidoRepositoryChannel
+from domain.value_objects.status_pedido import FinalizadoParaPagamentoState
 
 
 class CheckoutService:
@@ -30,8 +31,11 @@ class CheckoutService:
             valor_total=valor_total,
             created_at=datetime.datetime.now()
         )
-        self.checkout_repository.add(checkout)
         pedido = self.pedido_repository.get_by_id(pedido_id)
+        if not isinstance(pedido.status, FinalizadoParaPagamentoState):
+            return f"Não é possível realizar o checkout de um pedido com o estado {pedido.status}"; 
+            
+        self.checkout_repository.add(checkout)
         pedido.status.avancar(pedido)
         
         self.pedido_repository.update(pedido_id, pedido)

@@ -16,7 +16,7 @@ class Produtos(Resource):
          produto_service = ContainerDI.get(ProdutoService)
          produto = produto_service.obter_produto_por_id(produto_id)
          
-         if produto:
+         if produto is None:
              ResponseHandler.error('Produto não encontrado',404)
          
          produto_dto = ProdutoDTO(produto)
