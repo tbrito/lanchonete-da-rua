@@ -26,4 +26,4 @@ spec:
         - name: POSTGRES_DB
           value: "{{ .Values.postgresql.postgresqlDatabase }}"
         - name: DATABASE_URI
-          value: "postgresql://postgres:postgres@teste-postgresq.default.svc.cluster.local:5432/lanchonetedarua"
+          value: "postgresql://postgres:postgres@lanchonete-de-rua-postgresq.default.svc.cluster.local:5432/lanchonetedarua"
