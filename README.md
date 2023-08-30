@@ -65,7 +65,23 @@ E para finalizar a criação dos nossos pods pode instalar o chart no seu ambien
 ```shell
 helm install lanchonete-de-rua .
 ```
+**para testar ambiente k8s**
 
+Para testar se a nossa aplicação subiu vamos usar o `kubeclt`, para disparar comandos contra o cluster.
+
+* Comandos: 
+    - validar se os pods subiram
+      ```shell
+        kubectl get pods
+      ```
+    - conseguir bater na api
+      ```shell
+        kubectl port-forward deployment/lanchonete-de-rua-deployment 5000:5000
+      ```
+    - validar criação das secrets
+      ```shell
+        kubectl get secrets
+      ```
 
 # O Problema
 Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Porém, com a expansão e sem um sistema de controle de pedidos, o atendimento aos clientes pode ser caótico e confuso. 
