@@ -27,3 +27,6 @@ spec:
           value: "{{ .Values.postgresql.postgresqlDatabase }}"
         - name: DATABASE_URI
           value: "postgresql://postgres:postgres@lanchonete-de-rua-postgresq.default.svc.cluster.local:5432/lanchonetedarua"
+        envFrom:
+         - secretRef:
+            name:  "{{ .Values.name  }}-secret" #lanchonete-de-rua-secret
