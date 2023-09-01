@@ -12,6 +12,7 @@ service:
 
 secret:
   my_secret: "Zm9vYmFy" # Isso é "foobar" em base64
+  postgresqlUsername: "cG9zdGdyZXMK"
 
 postgresql:
   postgresqlUsername: ${{ secrets.postgresqlUsername }}
