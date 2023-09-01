@@ -1,4 +1,3 @@
-
 from typing import Type
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.repositories.item_pedido_repository_channel import ItemPedidoRepositoryChannel

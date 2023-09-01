@@ -1,13 +1,12 @@
-import logging
+from sqlalchemy import case
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.entities.pedido import Pedido
-from adapters.mappings.pedido_mapper import PedidoDB, PedidoMapper
-from domain.value_objects.status_pedido import Finalizado
+from adapters.mappings.pedido_mapper import PedidoMapper
+from adapters.mappings.pedido_db import PedidoDB
+from domain.value_objects.status_pedido import FinalizadoState, PedidoAbandonadoState, status_mapping
 from adapters.database.data_access.session_manager import SessionManager
-from sqlalchemy.orm import joinedload, relationship
-
 from adapters.mappings.item_pedido_db import ItemPedidoBD
-from web.resources.pedidos.pedido_output import pedido_output
+from adapters.mappings.produto_db import ProdutoDB
 
 class PedidoRepository(PedidoRepositoryChannel):
     def __init__(self, session_manager: SessionManager):
@@ -24,13 +23,30 @@ class PedidoRepository(PedidoRepositoryChannel):
         return PedidoMapper.map_to_entity(pedido_db)
 
     def obter_pedidos_nao_finalizados(self):
-        status = Finalizado()
-        pedidos_entity = self._session.query(PedidoDB).filter(PedidoDB.status != status.nome).all()
+        status_finalizado = FinalizadoState()
+        status_abandonado = PedidoAbandonadoState()
+        
+        ordering = case(
+                    (PedidoDB.status == "Em Atendimento", 0),
+                    (PedidoDB.status == "Finalizado para pagamento", 1),
+                    (PedidoDB.status == "Em preparação", 2),
+                    (PedidoDB.status == "Finalizado", 3),
+                    (PedidoDB.status == "Pedido abandonado", 4)
+                    ,
+                    else_ = 5
+                    )
+        
+        pedidos_entity = (self._session
+                          .query(PedidoDB)
+                          .filter(PedidoDB.status != (status_finalizado.nome or status_abandonado.nome))
+                          .order_by(ordering.asc(), PedidoDB.created_at.asc())
+                          .all())
+        
         return PedidoMapper.map_to_entities(pedidos_entity)
     
     def get_all_by_cliente_id(self, cliente_id):
         pedidos_entity = self._session.query(PedidoDB).filter(PedidoDB.cliente_id == cliente_id).all()
-        return PedidoDB.map_to_entities(pedidos_entity)
+        return PedidoMapper.map_to_entities(pedidos_entity)
 
     def add(self, pedido: Pedido):
         pedido_db = PedidoDB.map_from_entity(pedido)

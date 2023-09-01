@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, case
 from sqlalchemy.orm import declarative_base, relationship
 
 from adapters.mappings.cliente_db import ClienteDB
@@ -17,6 +17,9 @@ class PedidoDB(Base):
     status = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.now())
     
+    
+    
+
     
     
     

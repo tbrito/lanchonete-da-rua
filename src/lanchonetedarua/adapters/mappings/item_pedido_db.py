@@ -11,12 +11,13 @@ class ItemPedidoBD(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     pedido_id = Column(Integer, ForeignKey(PedidoDB.id))
-    pedido = relationship(PedidoDB)
+    pedido = relationship(PedidoDB, backref="pedido", lazy="subquery")
     produto_id = Column(Integer, ForeignKey(ProdutoDB.id))
-    produto = relationship(ProdutoDB)
+    produto = relationship(ProdutoDB, backref="produto", lazy="subquery")
     
     valor = Column(Float)
     quantidade = Column(Integer)
+    
     
 
     

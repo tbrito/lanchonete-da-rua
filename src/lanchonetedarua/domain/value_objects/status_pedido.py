@@ -54,13 +54,13 @@ class ProntoParaEntregaState(StatusPedido):
         self.nome = "Pronto para entrega"
     
     def avancar(self, pedido):
-        pedido.status = Finalizado()
+        pedido.status = FinalizadoState()
     
     def retroceder(self, pedido):
         pedido.status = EmPreparacaoState()
 
 
-class Finalizado(StatusPedido):
+class FinalizadoState(StatusPedido):
     def __init__(self):
         self.nome = "Finalizado"
         
@@ -77,6 +77,6 @@ status_mapping = {
     "Finalizado para pagamento": FinalizadoParaPagamentoState(),
     "Em preparação": EmPreparacaoState(),
     "Pronto para entrega": ProntoParaEntregaState(),
-    "Finalizado": Finalizado(),
+    "Finalizado": FinalizadoState(),
     "Pedido abandonado": PedidoAbandonadoState()
 }

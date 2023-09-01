@@ -16,7 +16,7 @@ class PedidoMapper:
         if pedido_db is None:
             return None
         
-        return Pedido(
+        pedido = Pedido(
             id=pedido_db.id,
             cliente_id = pedido_db.cliente_id,
             session_id = pedido_db.session_id,
@@ -24,6 +24,8 @@ class PedidoMapper:
             status = StatusPedido.get_status_from_database(pedido_db.status),
             created_at=pedido_db.created_at
         )
+        
+        return pedido
     
     @staticmethod
     def map_from_entity(entity: Pedido) -> Type['PedidoDB']:
