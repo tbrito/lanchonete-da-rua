@@ -13,6 +13,9 @@ class PedidoService:
             item_pedido_repository: ItemPedidoRepositoryChannel) -> Type['PedidoService']:
         self.pedido_repository  = pedido_repository
         self.item_pedido_repository  = item_pedido_repository
+        
+    def obter_pedidos(self):
+        return self.pedido_repository.obter_todos_os_pedidos()
  
     def obter_pedidos_nao_finalizados(self):
         return self.pedido_repository.obter_pedidos_nao_finalizados()

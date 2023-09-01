@@ -8,6 +8,16 @@ from adapters.database.data_access.session_manager import SessionManager
 from adapters.mappings.item_pedido_db import ItemPedidoBD
 from adapters.mappings.produto_db import ProdutoDB
 
+status_ordering = case(
+            (PedidoDB.status == "Em Atendimento", 0),
+            (PedidoDB.status == "Finalizado para pagamento", 1),
+            (PedidoDB.status == "Em preparação", 2),
+            (PedidoDB.status == "Finalizado", 3),
+            (PedidoDB.status == "Pedido abandonado", 4)
+            ,
+            else_ = 5
+            )
+
 class PedidoRepository(PedidoRepositoryChannel):
     def __init__(self, session_manager: SessionManager):
         self._session = session_manager.session
@@ -22,24 +32,24 @@ class PedidoRepository(PedidoRepositoryChannel):
         
         return PedidoMapper.map_to_entity(pedido_db)
 
+    def obter_todos_os_pedidos(self):
+        pedidos_entity = (self._session
+                    .query(PedidoDB)
+                    .order_by(status_ordering.asc(), PedidoDB.created_at.asc())
+                    .all())
+        
+        return PedidoMapper.map_to_entities(pedidos_entity)
+
     def obter_pedidos_nao_finalizados(self):
         status_finalizado = FinalizadoState()
         status_abandonado = PedidoAbandonadoState()
         
-        ordering = case(
-                    (PedidoDB.status == "Em Atendimento", 0),
-                    (PedidoDB.status == "Finalizado para pagamento", 1),
-                    (PedidoDB.status == "Em preparação", 2),
-                    (PedidoDB.status == "Finalizado", 3),
-                    (PedidoDB.status == "Pedido abandonado", 4)
-                    ,
-                    else_ = 5
-                    )
+
         
         pedidos_entity = (self._session
                           .query(PedidoDB)
                           .filter(PedidoDB.status != (status_finalizado.nome or status_abandonado.nome))
-                          .order_by(ordering.asc(), PedidoDB.created_at.asc())
+                          .order_by(status_ordering.asc(), PedidoDB.created_at.asc())
                           .all())
         
         return PedidoMapper.map_to_entities(pedidos_entity)
