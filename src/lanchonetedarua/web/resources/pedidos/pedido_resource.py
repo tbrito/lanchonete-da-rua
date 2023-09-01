@@ -1,6 +1,6 @@
 from flask_restx import Resource
 from domain.value_objects.status_pedido import EmAtendimentoState, EmPreparacaoState, ProntoParaEntregaState
-from web.resources.pedidos.output.pedido_output import pedidos_output, pedido_output
+from web.resources.pedidos.pedido_output import pedidos_output, pedido_output
 from web.response_handle.response_handler import ResponseHandler
 
 from domain.services.pedido_service import PedidoService
@@ -122,6 +122,18 @@ class PedidosNoParameter(Resource):
 
         return ResponseHandler.success(message= 'pedido criado sucesso', data = pedido_criado, status_code=201)
     
+    @api.doc('Obter lista de pedidos')
+    def get(self):
+        pedido_service = ContainerDI.get(PedidoService)
+       
+        lista_pedidos = pedido_service.obter_pedidos()
+        
+        lista_pedidos_output = pedidos_output.dump(lista_pedidos)
+        
+        return ResponseHandler.success(lista_pedidos_output)
+    
+@api.route('/pedidos-nao-finalizados')
+class PedidosNaoFinalizadosLista(Resource):
     @api.doc('Obter lista de pedidos não finalizados')
     def get(self):
         pedido_service = ContainerDI.get(PedidoService)

@@ -1,4 +1,3 @@
-
 from typing import Type
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.repositories.item_pedido_repository_channel import ItemPedidoRepositoryChannel
@@ -14,6 +13,9 @@ class PedidoService:
             item_pedido_repository: ItemPedidoRepositoryChannel) -> Type['PedidoService']:
         self.pedido_repository  = pedido_repository
         self.item_pedido_repository  = item_pedido_repository
+        
+    def obter_pedidos(self):
+        return self.pedido_repository.obter_todos_os_pedidos()
  
     def obter_pedidos_nao_finalizados(self):
         return self.pedido_repository.obter_pedidos_nao_finalizados()
@@ -29,7 +31,7 @@ class PedidoService:
         self.pedido_repository.add(pedido_entity)
 
     def obter_pedido_por_id(self, pedido_id) -> Pedido:
-        return self.pedido_repository.get_by_id(pedido_id) 
+        return self.pedido_repository.get_by_id(pedido_id)
     
     def atualizar_pedido(self, pedido_id: int, pedido_data: Pedido):
         return self.pedido_repository.update(pedido_id, pedido_data)

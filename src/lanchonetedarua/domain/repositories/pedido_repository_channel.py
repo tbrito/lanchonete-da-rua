@@ -8,10 +8,15 @@ class PedidoRepositoryChannel(ABC):
     def get_by_id(self, pedido_id: int) -> Pedido:
         """Obter pedido pelo id."""
         pass
+    
+    @abstractmethod
+    def obter_todos_os_pedidos(self) -> list[Pedido]:
+        """Obter todos os pedidos."""
+        pass
 
     @abstractmethod
     def obter_pedidos_nao_finalizados(self) -> list[Pedido]:
-        """Obter todos os pedido."""
+        """Obter todos os pedidos nao finalizados."""
         pass
 
     @abstractmethod
@@ -23,11 +28,6 @@ class PedidoRepositoryChannel(ABC):
     def update(self, pedido_id: int, pedido):
         """Atualizar um pedido."""    
         pass
-    
-    # @abstractmethod
-    # def update_status(self, pedido_id, status):
-    #     """Atualiza status do pedido"""
-    #     pass
 
     @abstractmethod
     def delete(self, pedido_id: int):

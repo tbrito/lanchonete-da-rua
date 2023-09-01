@@ -1,10 +1,14 @@
 from domain.value_objects.status_pedido import EmAtendimentoState, FinalizadoParaPagamentoState, PedidoAbandonadoState, StatusPedido
+from domain.entities.cliente import Cliente
+from domain.entities.produto import Produto
 from .entity import Entity
 
 class Pedido(Entity):
     cliente_id: int
     session_id: int
     observacoes: str
+    cliente: Cliente
+    produto: Produto
     status: StatusPedido
     def __init__(self, id, cliente_id, session_id, observacoes, status, created_at):
         super().__init__(id, created_at)
