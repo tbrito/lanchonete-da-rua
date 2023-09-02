@@ -7,7 +7,7 @@ from domain.entities.fila_atendimento import FilaAtendimento
 from domain.repositories.fila_atendimento_repository_channel import FilaAtendimentoRepositoryChannel
 from domain.repositories.item_pedido_repository_channel import ItemPedidoRepositoryChannel
 from domain.value_objects.status_pedido import FinalizadoParaPagamentoState
-
+from domain.value_objects.status_pagamento import StatusPagamento
 
 class CheckoutService:
     def __init__(self, 
@@ -27,25 +27,29 @@ class CheckoutService:
         checkout = Checkout(
             id=0,
             pedido_id=pedido_id,
-            data_pagamento=datetime.datetime.now(),
             valor_total=valor_total,
             created_at=datetime.datetime.now()
         )
+        self.checkout_repository.add(checkout)
+        return checkout
+    
+    def atualizar_status_pagamento(self, pedido_id, status_pagamento: StatusPagamento):
         pedido = self.pedido_repository.get_by_id(pedido_id)
         if not isinstance(pedido.status, FinalizadoParaPagamentoState):
-            return f"Não é possível realizar o checkout de um pedido com o estado {pedido.status}"; 
-            
-        self.checkout_repository.add(checkout)
-        pedido.status.avancar(pedido)
-        
-        self.pedido_repository.update(pedido_id, pedido)
+            raise ValueError(f"Não é possível atualizar o status pagamento de um pedido com o estado {pedido.status.nome}");
+    
+        self.checkout_repository.atualizar_status_pagamento(pedido_id, status_pagamento)
 
+        if (StatusPagamento.APROVADO == status_pagamento):
+            self._liberar_preparo_pedido(pedido_id, pedido)
+
+    def _liberar_preparo_pedido(self, pedido_id, pedido):
+        pedido.status.avancar(pedido)
+        self.pedido_repository.update(pedido_id, pedido)
         fila = FilaAtendimento(
-            id=0,
-            pedido_id=pedido_id,
-            recebido_em=datetime.datetime.now(),
-            finalizado_em= datetime.datetime.now(),
-            created_at= datetime.datetime.now(),
+                id=0,
+                pedido_id=pedido_id,
+                recebido_em=datetime.datetime.now(),
+                created_at= datetime.datetime.now(),
         )
         self.fila_atendimento_repository.add(fila)
-        return checkout

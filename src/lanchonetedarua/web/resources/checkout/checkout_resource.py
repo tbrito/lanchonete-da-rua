@@ -1,5 +1,6 @@
 from flask_restx import Resource
 from domain.services.checkout_service import CheckoutService
+from domain.value_objects.status_pagamento import StatusPagamento
 from web.resources.checkout.checkout_input import CheckoutInput
 from web.resources.checkout.checkout_dto import CheckoutDTO
 from web.response_handle.response_handler import ResponseHandler
@@ -7,7 +8,7 @@ from web.response_handle.response_handler import ResponseHandler
 from container_di import ContainerDI
 
 api = CheckoutInput.api
-# _checkout = CheckoutInput.checkout
+_pagamento = CheckoutInput.pagamento
 
 @api.route('/<string:pedido_id>/checkout')
 class Checkout(Resource):
@@ -23,3 +24,17 @@ class Checkout(Resource):
         checkkout_dto = CheckoutDTO(checkout)
         
         return ResponseHandler.success(data=checkkout_dto, status_code=201)
+    
+@api.route('/pagamento-webhook')
+class AtualizaPagamentoPedidoWebhook(Resource):
+    @api.doc('Webhook para atualização do status do pagamento do pedido')
+    @api.expect(_pagamento)
+    def post(self):
+        try:
+            checkout_service = ContainerDI.get(CheckoutService)
+            pedido_id = api.payload['external_reference']
+            status_pagamento = StatusPagamento(api.payload['status'])
+            checkout_service.atualizar_status_pagamento(pedido_id, status_pagamento)
+            return ResponseHandler.success("Dados recebidos com sucesso.", status_code=201)
+        except Exception as e:
+            return ResponseHandler.error(str(e), status_code=400)

@@ -7,4 +7,4 @@ class FilaAtendimentoService:
         self.fila_atendimento_repository  = fila_atendimento_repository
  
     def obter_fila_cozinha(self):
-        return self.fila_atendimento_repository.get_all()
+        return self.fila_atendimento_repository.obter_itens_nao_finalizados()

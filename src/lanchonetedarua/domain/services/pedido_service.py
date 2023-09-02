@@ -1,18 +1,22 @@
 from typing import Type
 from domain.repositories.pedido_repository_channel import PedidoRepositoryChannel
 from domain.repositories.item_pedido_repository_channel import ItemPedidoRepositoryChannel
+from domain.repositories.fila_atendimento_repository_channel import FilaAtendimentoRepositoryChannel
 from domain.builders.pedido_builder import PedidoBuilder
 from domain.entities.pedido import Pedido
 from web.resources.pedidos.pedido_input import PedidoInput
+from domain.value_objects.status_pedido import FinalizadoState
 
 class PedidoService:
 
     def __init__(
             self, 
             pedido_repository: PedidoRepositoryChannel, 
-            item_pedido_repository: ItemPedidoRepositoryChannel) -> Type['PedidoService']:
+            item_pedido_repository: ItemPedidoRepositoryChannel,
+            fila_atendimento_repository: FilaAtendimentoRepositoryChannel) -> Type['PedidoService']:
         self.pedido_repository  = pedido_repository
         self.item_pedido_repository  = item_pedido_repository
+        self.fila_atendimento_repository = fila_atendimento_repository
         
     def obter_pedidos(self):
         return self.pedido_repository.obter_todos_os_pedidos()
@@ -34,7 +38,12 @@ class PedidoService:
         return self.pedido_repository.get_by_id(pedido_id)
     
     def atualizar_pedido(self, pedido_id: int, pedido_data: Pedido):
-        return self.pedido_repository.update(pedido_id, pedido_data)
+        pedido = self.pedido_repository.update(pedido_id, pedido_data)
+        
+        if isinstance(pedido.status, FinalizadoState):
+            self.fila_atendimento_repository.finalizar_by_pedido_id(pedido_id)
+
+        return pedido
         
     def atualizar_status(self, pedido_id, status):
         self.pedido_repository.update_status(pedido_id, status)
