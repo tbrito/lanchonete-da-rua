@@ -15,7 +15,17 @@ class CheckoutRepository(CheckoutRepositoryChannel):
         return CheckoutMapper.map_to_entity(checkout_db)
     
     def atualizar_status_pagamento(self, pedido_id, status_pagamento: StatusPagamento):
-        checkout_db = self._session.query(CheckoutDB).filter_by(pedido_id=pedido_id).first()
+        checkout_db = self._get_checkout_by_pedido_id(pedido_id)
         if checkout_db is not None:
             checkout_db.status_pagamento = status_pagamento.name
             self._session.commit()
+
+    def obter_status_pagamento(self, pedido_id):
+        checkout_db = self._get_checkout_by_pedido_id(pedido_id)
+        if checkout_db is None:
+            return None
+        checkout = CheckoutMapper.map_to_entity(checkout_db)
+        return checkout.status_pagamento
+
+    def _get_checkout_by_pedido_id(self, pedido_id):
+        return self._session.query(CheckoutDB).filter_by(pedido_id=pedido_id).first()

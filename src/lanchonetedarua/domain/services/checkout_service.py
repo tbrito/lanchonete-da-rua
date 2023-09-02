@@ -53,3 +53,6 @@ class CheckoutService:
                 created_at= datetime.datetime.now(),
         )
         self.fila_atendimento_repository.add(fila)
+
+    def obter_status_pagamento(self, pedido_id):
+        return self.checkout_repository.obter_status_pagamento(pedido_id)

@@ -38,3 +38,13 @@ class AtualizaPagamentoPedidoWebhook(Resource):
             return ResponseHandler.success("Dados recebidos com sucesso.", status_code=201)
         except Exception as e:
             return ResponseHandler.error(str(e), status_code=400)
+        
+@api.route('/<string:pedido_id>/status-pagamento')
+class ConsultaStatusPagamentoPedido(Resource):
+    @api.doc('Consulta status do pagamento do pedido')
+    def get(self, pedido_id):
+        checkout_service = ContainerDI.get(CheckoutService)
+        status_pagamento = checkout_service.obter_status_pagamento(pedido_id)
+        if status_pagamento is None:
+            return ResponseHandler.error("Status não encontrado", status_code=404)
+        return ResponseHandler.success(status_pagamento)
