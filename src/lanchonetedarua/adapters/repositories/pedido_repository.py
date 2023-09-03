@@ -59,7 +59,7 @@ class PedidoRepository(PedidoRepositoryChannel):
         return PedidoMapper.map_to_entities(pedidos_entity)
 
     def add(self, pedido: Pedido):
-        pedido_db = PedidoDB.map_from_entity(pedido)
+        pedido_db = PedidoMapper.map_from_entity(pedido)
         self._session.add(pedido_db)
         self._session.commit()
         return PedidoMapper.map_to_entity(pedido_db)

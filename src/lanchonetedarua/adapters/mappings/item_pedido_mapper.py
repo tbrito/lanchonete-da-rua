@@ -5,7 +5,7 @@ class ItemPedidoMapper:
 
     @staticmethod
     def map_to_entities(itens_pedido_entity):
-        return [ItemPedidoMapper.map_item_pedido_db_to_entity(item_pedido_db) for item_pedido_db in itens_pedido_entity]
+        return [ItemPedidoMapper.map_to_entity(item_pedido_db) for item_pedido_db in itens_pedido_entity]
 
     @staticmethod
     def map_to_entity(item_pedido_db):

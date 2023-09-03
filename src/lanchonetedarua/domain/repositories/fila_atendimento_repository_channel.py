@@ -19,4 +19,13 @@ class FilaAtendimentoRepositoryChannel(ABC):
     @abstractmethod
     def delete(self, fila_id):
         """Excluir um fila.""" 
+        pass
+
+    @abstractmethod
+    def obter_itens_nao_finalizados(self):
+        """Obter todos os itens da fila não finalizados."""
         pass   
+
+    def finalizar_by_pedido_id(self, pedido_id):
+        """Finalizar uma fila por pedido.""" 
+        pass

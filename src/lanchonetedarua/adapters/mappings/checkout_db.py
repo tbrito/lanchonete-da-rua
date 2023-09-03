@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import Column, Float, ForeignKey, Integer, DateTime
+from sqlalchemy import Column, Float, ForeignKey, Integer, DateTime, String
 from sqlalchemy.orm import declarative_base
 
 from adapters.mappings.pedido_db import PedidoDB
@@ -15,3 +15,4 @@ class CheckoutDB(Base):
     valor_total = Column(Float, nullable=False)
     data_pagamento = Column(DateTime, default=datetime.datetime.now())
     created_at = Column(DateTime, default=datetime.datetime.now())
+    status_pagamento = Column(String)

@@ -39,17 +39,17 @@ def configure_inject() -> None:
     ContainerDI.register(ClienteService, cliente_service)
     ContainerDI.register(ClienteRepository, cliente_service)
     
-    pedido_repository = PedidoRepository(session_manager)
-    item_pedido_repository = ItemPedidoRepository(session_manager)
-    pedido_service = PedidoService(pedido_repository, item_pedido_repository)
-    ContainerDI.register(PedidoService, pedido_service)
-    ContainerDI.register(PedidoRepository, pedido_service)
-    ContainerDI.register(ItemPedidoRepository, pedido_service)
-    
     fila_repository = FilaAtendimentoRepository(session_manager)
     fila_service = FilaAtendimentoService(fila_repository)
     ContainerDI.register(FilaAtendimentoService, fila_service)
     ContainerDI.register(FilaAtendimentoRepository, fila_service)
+
+    pedido_repository = PedidoRepository(session_manager)
+    item_pedido_repository = ItemPedidoRepository(session_manager)
+    pedido_service = PedidoService(pedido_repository, item_pedido_repository, fila_repository)
+    ContainerDI.register(PedidoService, pedido_service)
+    ContainerDI.register(PedidoRepository, pedido_service)
+    ContainerDI.register(ItemPedidoRepository, pedido_service)
 
     checkout_repository = CheckoutRepository(session_manager)
     checkout_service = CheckoutService(checkout_repository, pedido_repository, fila_repository, item_pedido_repository)
