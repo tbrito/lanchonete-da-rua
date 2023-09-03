@@ -12,7 +12,9 @@ service:
 
 secret:
   my_secret: "Zm9vYmFy" # Isso é "foobar" em base64
-  postgresqlUsername: "cG9zdGdyZXMK"
+  postgresqlUsername: "cG9zdGdyZXM="
+  postgresqlPassword: "cG9zdGdyZXM="
+  postgresqlDatabase: "bGFuY2hvbmV0ZWRhcnVh"
 
 postgresql:
   postgresqlUsername: "postgres"
