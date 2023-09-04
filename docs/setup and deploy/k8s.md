@@ -20,11 +20,6 @@ Caso seja Windows:
 ```shell
 minikube docker-env
 ```  
-    
-Como ja buildamos a imagem nos passos anteriores, a próxima coisa que voce irá fazer é o build da imagem que será enviar a imagem docker para o seu ambiente kubernetes, utlizando o comando abaixo:
-```shell
-minikube image load lanchonete-da-rua
-```
 
 Com o seu ambiente já inicializado e com a imagem da aplicação disponivel podermos prosseguir com a preparação do nosso helm chart personalizado. Entre na pasta `deploy` e rode o seguinte comando para levantar as dependencias do nosso chart.
 ``` shell
