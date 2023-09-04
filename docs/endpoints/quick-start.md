@@ -2,7 +2,7 @@
 
 Com a API Lanchonete da Rua Instalada, algumas tabelas são preenchidas com [valores de demonstração](valores-demonstracao.md):
 
-![FluxoPedido](image.png)
+![NovoFluxo](image.png)
 
 ### 1) Inicie um novo pedido com o identificador do cliente, a sessão de navegação alguma outra informação como se segue no exemplo:
 
@@ -37,20 +37,20 @@ curl -X 'POST' \
 
 ```
 
-### 3) Encerre o pedido
-
-```bash
-curl -X 'PATCH' \
-  'http://localhost:5000/pedidos/1/encaminhar-para-pagamento' \
-  -H 'accept: application/json'
-```
-
-### 4) Prepare o pedido para pagamento e entrega (checkout)
+### 3) Prepare o pedido para pagamento e entrega (checkout)
 ```bash
 curl -X 'POST' \
   'http://localhost:5000/pedidos/1/checkout' \
   -H 'accept: application/json' \
   -d ''
+```
+
+### 4) Encerre o pedido
+
+```bash
+curl -X 'PATCH' \
+  'http://localhost:5000/pedidos/1/encaminhar-para-pagamento' \
+  -H 'accept: application/json'
 ```
 
 ### 5) Aguarde o pagamento do pagseguro
@@ -77,15 +77,6 @@ curl -X 'GET' \
   'http://localhost:5000/pedidos/na-fila' \
   -H 'accept: application/json'
 
-### 7) Finaliza pedido
-
-Esse endpoint encerra o pedido pela cozinha e o disponibiliza para entrega
-
-```bash
-curl -X 'PATCH' \
-  'http://localhost:5000/pedidos/1/finalizar-pedido' \
-  -H 'accept: application/json'
-```
 
 ### 7) Encaminhado para entrega
 Esse endpoint encerra o pedido. 
@@ -93,6 +84,16 @@ Esse endpoint encerra o pedido.
 ```bash
 curl -X 'PATCH' \
   'http://localhost:5000/pedidos/1/encaminhar-para-entrega' \
+  -H 'accept: application/json'
+```
+
+### 8) Finaliza pedido
+
+Esse endpoint encerra o pedido pela cozinha e o disponibiliza para entrega
+
+```bash
+curl -X 'PATCH' \
+  'http://localhost:5000/pedidos/1/finalizar-pedido' \
   -H 'accept: application/json'
 ```
 

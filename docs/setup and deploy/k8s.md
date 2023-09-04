@@ -20,11 +20,6 @@ Caso seja Windows:
 ```shell
 minikube docker-env
 ```  
-
-Agora vamos fazer o build da imagem a partir do Dockerfile
-```shell
-docker build -t lanchonete-da-rua .
-```
     
 Como ja buildamos a imagem nos passos anteriores, a próxima coisa que voce irá fazer é o build da imagem que será enviar a imagem docker para o seu ambiente kubernetes, utlizando o comando abaixo:
 ```shell
