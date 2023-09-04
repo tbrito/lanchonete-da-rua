@@ -2,8 +2,17 @@ replicaCount: 2
 
 name: lanchonete-de-rua
 
+nameOverride: null
+fullnameOverride: null
+
+global:
+  postgresql:
+    auth:
+      postgresPassword: "dblanchonetederuapass"
+      database: "lanchonetedarua"
+
 image:
-  repository: lanchonete-de-rua
+  repository: "lucasnishimoto05/lanchonete-de-rua:1.0.0"
 
 service:
   type: LoadBalancer
@@ -11,12 +20,6 @@ service:
   targetPort: 5000
 
 secret:
-  my_secret: "Zm9vYmFy" # Isso é "foobar" em base64
   postgresqlUsername: "cG9zdGdyZXM="
-  postgresqlPassword: "cG9zdGdyZXM="
   postgresqlDatabase: "bGFuY2hvbmV0ZWRhcnVh"
-
-postgresql:
-  postgresqlUsername: "postgres"
-  postgresqlPassword: "postgres"
-  postgresqlDatabase: "lanchonetedarua"
+  postgresPassword: "ZGJsYW5jaG9uZXRlZGVydWFwYXNzCg=="
