@@ -9,7 +9,7 @@ Há uma lanchonete de bairro que está expandindo devido seu grande sucesso. Por
 ## Setup e instalação
 [Instalação em docker](./setup%20and%20deploy/Docker.md)
 
-[Instalação em k8s](./setup%20and%20deploy/Docker.md)
+[Instalação em k8s](./setup%20and%20deploy/k8s.md)
 
 ## API
 

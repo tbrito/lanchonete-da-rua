@@ -2,6 +2,15 @@
 
 [Inicie Rapido](./quick-start.md)
 
+## Endpoints
+
+### [Categorias](./categoria.md)
+
+### [Produtos](./produtos.md)
+
+### [Clientes](./clientes.md)
+
+### [Pedidos](./pedidos.md)
 
 ### Recomendamos tambem:
 [Instalação utilizando k8s](./k8s.md)

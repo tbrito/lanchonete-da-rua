@@ -18,7 +18,7 @@ renanh2008@hotmail.com
 Tiago de Sousa Brito
 tiago.sousa.brito@gmail.com
 
-### Inicie Já:
+## Inicie Já:
 [Overview da API](./overview.md)
 
 [Instalação utilizando docker](./setup%20and%20deploy/Docker.md)
