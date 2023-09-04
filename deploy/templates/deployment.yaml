@@ -19,14 +19,8 @@ spec:
         ports:
         - containerPort: {{ .Values.service.targetPort }}
         env:
-        - name: POSTGRES_USER
-          value: "{{ .Values.postgresql.postgresqlUsername }}"
-        - name: POSTGRES_PASSWORD
-          value: "{{ .Values.postgresql.postgresqlPassword }}"
-        - name: POSTGRES_DB
-          value: "{{ .Values.postgresql.postgresqlDatabase }}"
-        - name: DATABASE_URI
-          value: "postgresql://postgres:postgres@lanchonete-de-rua-postgresq.default.svc.cluster.local:5432/lanchonetedarua"
+        - name: DATABASE_URI  
+          value: "postgresql://postgres:dblanchonetederuapass@lanchonete-de-rua-postgresql.default.svc.cluster.local:5432/lanchonetedarua"
         envFrom:
          - secretRef:
-            name:  "{{ .Values.name  }}-secret" #lanchonete-de-rua-secret
+            name:  "{{ .Values.name  }}-secret" 
