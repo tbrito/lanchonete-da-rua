@@ -25,3 +25,7 @@ jobs:
       - name: Lint and syntax check
         run: |
           # Poderíamos usar uma rotina de análise sintática e estática
+
+      - name: Run tests
+        run: |
+          # Poderíamos rodar os testes do projeto
