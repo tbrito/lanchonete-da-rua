@@ -1,0 +1,15 @@
+{
+    "serviceName": "lanchonete-da-rua-api-service",
+    "cluster": "cluster-lanchonete-da-rua",
+    "taskDefinition": "lanchonete-da-rua-api",
+    "desiredCount": 1,
+    "launchType": "FARGATE",
+    "networkConfiguration": {
+      "awsvpcConfiguration": {
+        "subnets": ["subnet-0123456789abcdef0", "subnet-0123456789abcdef1"],
+        "securityGroups": ["sg-0123456789abcdef0"],
+        "assignPublicIp": "ENABLED"
+      }
+    }
+  }
+  

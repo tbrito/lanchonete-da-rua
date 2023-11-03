@@ -39,3 +39,10 @@ jobs:
           docker push 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
         env:
           AWS_DEFAULT_REGION: us-east-2
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs register-task-definition --cli-input-json file=ecs-definitions/ecs-task-definition.json
+          aws ecs update-service --service lanchonete-da-rua-api-service --cluster seu-cluster-ecs --force-new-deployment
+        env:
+          AWS_DEFAULT_REGION: us-east-2
