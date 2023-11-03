@@ -1,6 +1,6 @@
 {
     "serviceName": "lanchonete-da-rua-api-service",
-    "cluster": "cluster-lanchonete-da-rua",
+    "cluster": "meucluster",
     "taskDefinition": "lanchonete-da-rua-api",
     "desiredCount": 1,
     "launchType": "FARGATE",
