@@ -19,13 +19,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: us-east-2
 
       - name: Build Docker image
         run: |
           docker build -t lanchonete-da-rua-api:latest .
         env:
-          AWS_DEFAULT_REGION: us-east-1
+          AWS_DEFAULT_REGION: us-east-2
 
       - name: Push Docker image to ECR
         run: |
@@ -33,9 +33,9 @@ jobs:
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 990304834518.dkr.ecr.us-east-1.amazonaws.com
           
           # Image tag
-          docker tag lanchonete-da-rua-api:latest 990304834518.dkr.ecr.us-east-1.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
+          docker tag lanchonete-da-rua-api:latest 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
           
           # Publish image to ecr
-          docker push 990304834518.dkr.ecr.us-east-1.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
+          docker push 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
         env:
-          AWS_DEFAULT_REGION: us-east-1
+          AWS_DEFAULT_REGION: us-east-2
