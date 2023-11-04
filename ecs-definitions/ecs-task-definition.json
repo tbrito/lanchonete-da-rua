@@ -3,16 +3,7 @@
     "containerDefinitions": [
       {
         "name": "lanchonete-da-rua-api",
-        "image": "990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest",
-        "memory": 512,
-        "cpu": 512,
-        "essential": true,
-        "portMappings": [
-          {
-            "containerPort": 5000,
-            "hostPort": 5000
-          }
-        ]
+        "image": "990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest"
       }
     ]
 }
