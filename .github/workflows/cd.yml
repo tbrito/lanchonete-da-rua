@@ -1,0 +1,51 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+      - workflow/cicd-api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Build Docker image
+        run: |
+          docker build -t lanchonete-da-rua-api:latest .
+        env:
+          AWS_DEFAULT_REGION: us-east-2
+
+      - name: Push Docker image to ECR
+        run: |
+          # Login ECR
+          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 990304834518.dkr.ecr.us-east-2.amazonaws.com
+          
+          # Image tag
+          docker tag lanchonete-da-rua-api:latest 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
+          
+          # Publish image to ecr
+          docker push 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
+        env:
+          AWS_DEFAULT_REGION: us-east-2
+
+      - name: Deploy to ECS
+        run: |
+          # Update task-definition 
+          # aws ecs register-task-definition --cli-input-json file://ecs-definitions/ecs-task-definition.json
+
+          # Update service
+          # aws ecs update-service --service lanchonete-da-rua-api-service --cluster cluster-lanchonete-da-rua --force-new-deployment
+        env:
+          AWS_DEFAULT_REGION: us-east-2
