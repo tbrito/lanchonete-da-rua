@@ -41,10 +41,10 @@ jobs:
           aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 990304834518.dkr.ecr.us-east-2.amazonaws.com
           
           # Image tag
-          docker tag lanchonete-da-rua-api:latest 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
+          docker tag lanchonete-da-rua-api:latest 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua-ecr:lanchonete-da-rua-api-latest
           
           # Publish image to ecr
-          docker push 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua:lanchonete-da-rua-api-latest
+          docker push 990304834518.dkr.ecr.us-east-2.amazonaws.com/lanchonete-da-rua-ecr:lanchonete-da-rua-api-latest
         env:
           AWS_DEFAULT_REGION: us-east-2
 
