@@ -21,6 +21,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
+      - name: Apply Migrations
+        working-directory: src/lanchonetedarua/adapters/database/migrations
+        run: |
+          pip install alembic sqlalchemy psycopg2
+          alembic upgrade head
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
       - name: Build Docker image
         run: |
           docker build -t lanchonete-da-rua-api:latest .
