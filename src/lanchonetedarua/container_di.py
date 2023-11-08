@@ -1,6 +1,6 @@
 from typing import Type
 
-
+# apenas para pull request
 class ContainerDI:
     dependencies = {}
 
